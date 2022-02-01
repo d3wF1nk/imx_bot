@@ -15,7 +15,7 @@ function loop(client) {
         //Potential buy
         let potBuy = [];
         order.forEach(o => {
-            if (o?.buy?.data?.quantity?.lt(balance?.imx)) {
+            if (o?.buy?.data?.quantity?.lt(balance?.imx?.div(3))) {
                 potBuy.push(o);
             }
         })
