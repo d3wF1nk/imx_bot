@@ -62,10 +62,10 @@ export const doTrade = async (client, order) => {
                 }
             }
         })
-        console.log("Token", trade?.token_id, "has been bought!");
+        console.log("Token", order.sell.data.properties.name, "has been bought!");
     }catch (err) {
         console.log(err)
-        console.error("There was an issue creating trade for NFT token ID", trade?.token_id);
+        console.error("There was an issue creating trade for NFT token ID", order?.token_id);
         return 0;
     }
     return order;
