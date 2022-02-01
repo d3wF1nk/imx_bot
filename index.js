@@ -48,7 +48,6 @@ function loop(client) {
                     item : await doTrade(client, t),
                     price: (t.buy.data.quantity.add(parseEther(diff.toString())).sub(parseEther(vars.X_VAL.toString())))
                 })
-                break;
             }
         }
         console.log(`to_sell: ${toSell.length}`)

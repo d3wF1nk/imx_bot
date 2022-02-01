@@ -62,7 +62,7 @@ export const doTrade = async (client, order) => {
                 }
             }
         })
-        console.log("Token", order.sell.data.properties.name, "has been bought!");
+        console.log(`${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`);
     }catch (err) {
         console.log(err)
         console.error("There was an issue creating trade for NFT token ID", order?.token_id);
@@ -71,7 +71,6 @@ export const doTrade = async (client, order) => {
     return order;
 }
 
-//todo:
 export const doSell = async (client, asset, price) => {
     if(asset === 0 || asset === undefined || asset === null)
         return 0;
@@ -95,7 +94,7 @@ export const doSell = async (client, asset, price) => {
                 },
             },
         });
-        console.log("Token", asset.sell.data.properties.name, "has been listed for sale!");
+        console.log(`${asset.sell.data.properties.name}, has been listed for sale at ${formatEther(price)}`);
         return 1;
     } catch (err) {
         console.log(err)
