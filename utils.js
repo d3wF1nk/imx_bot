@@ -140,6 +140,25 @@ export const getOrders = async (client) => {
     return orders;
 }
 
+export function comparePrice(price, avg) {
+
+    let diff = ((price / avg) * 100).toFixed();
+
+    let rs = {};
+    if (price < avg && diff !== '100') {
+        rs.value = 100 - diff;
+        rs.sign = '-'
+        if (rs.value >= 25) {
+            rs.alert = true
+        }
+    } else {
+        rs.value = diff - 100;
+        rs.sign = '+'
+    }
+
+    return rs;
+}
+
 export const getDiff = async (client, item) => {
     let orders = [];
     let result_set = await client.getOrders({
@@ -159,10 +178,10 @@ export const getDiff = async (client, item) => {
     let cheap = orders.reduce(function (prev, curr) {
         return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
     });
-    console.log(`${formatEther(item.buy.data.quantity)} cost less than ${formatEther(cheap.buy.data.quantity)}?`)
+    //console.log(`${formatEther(item.buy.data.quantity)} cost less than ${formatEther(cheap.buy.data.quantity)}?`)
     if (item.buy.data.quantity.lt(cheap.buy.data.quantity)) {
         const diff = formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity));
-        console.log(diff)
+        //console.log(diff)
         if (diff > 0.000005)
             return diff;
     }
@@ -193,9 +212,7 @@ export function parseEther(num){
 }
 
 export const getBalances = async (client) => {
-    const balances = await client.getBalances({
-        user: client.address
-    });
+    const balances = await client.getBalances({user: client.address});
     let eth = formatEther(balances.imx);
     console.log(`ETH:${eth}`)
     return balances;

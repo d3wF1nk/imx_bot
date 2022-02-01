@@ -1,4 +1,4 @@
-import {doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
+import {comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
 import {composeUrl, getAvg} from "./tt.js";
 import {vars} from "./config.js";
 
@@ -30,8 +30,13 @@ function loop(client) {
                 if (avg !== 0)
                     if (avg.last_date < vars.MAX_TIME)
                         if (avg.avg_price > formatEther(p.sell.data.quantity))
-                            if (avg.last_price > formatEther(p.sell.data.quantity))
+                            if (avg.last_price > formatEther(p.buy.data.quantity)){
+                                const diff = comparePrice(formatEther(p.buy.data.quantity),avg.avg_price)
+                                console.log(`[id:${p.order_id}] [avg:${avg.avg_price}] [${avg.last_date}m => last_price:${avg.last_price}] [actual_price:${formatEther(p.buy.data.quantity)}] ${p.sell.data.properties.name} (${diff.sign}${diff.value}%)${diff.alert ? '⚠ ⚠ ⚠' : ''}`)
+                                console.log(`${composeUrl(p)}\n`)
                                 topBuy.push(p)
+                            }
+
             }
         }
         console.log(`top_buy: ${topBuy.length}`)
@@ -39,7 +44,6 @@ function loop(client) {
         //Filter && buy
         let toSell = []
         for (const t of topBuy) {
-            console.log(`\n${composeUrl(t)}`)
             if (await isAlreadyBought(client, t))
                 continue;
             const diff = await getDiff(client, t)
