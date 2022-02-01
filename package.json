@@ -16,6 +16,10 @@
     "@ethersproject/wallet": "^5.5.0",
     "@imtbl/imx-sdk": "^1.3.36",
     "axios": "^0.25.0",
+    "discord-webhook-node": "^1.1.8",
     "ethers": "^5.5.4"
+  },
+  "dependencies": {
+    "discord": "^0.8.2"
   }
 }

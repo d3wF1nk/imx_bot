@@ -2,6 +2,7 @@ import {ethers, providers} from "ethers";
 import {ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import wallet from "@ethersproject/wallet";
 import {env as conf} from "./prod_config.js";
+import { Webhook } from 'discord-webhook-node';
 
 export const getProvider = (provider_name) => {
     let provider;
@@ -42,7 +43,7 @@ export const doConnect = async () => {
 
 export const doTrade = async (client, order) => {
     let trade;
-    try{
+    try {
         trade = await client.createTrade({
             user: client.address,
             orderId: order.order_id,
@@ -63,7 +64,7 @@ export const doTrade = async (client, order) => {
             }
         })
         console.log(`${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`);
-    }catch (err) {
+    } catch (err) {
         console.log(err)
         console.error("There was an issue creating trade for NFT token ID", order?.token_id);
         return 0;
@@ -72,7 +73,7 @@ export const doTrade = async (client, order) => {
 }
 
 export const doSell = async (client, asset, price) => {
-    if(asset === 0 || asset === undefined || asset === null)
+    if (asset === 0 || asset === undefined || asset === null)
         return 0;
     try {
         await client.createOrder({
@@ -102,7 +103,8 @@ export const doSell = async (client, asset, price) => {
         return 0;
     }
 }
-export function cleanString(str){
+
+export function cleanString(str) {
     return str.replace(/[^a-zA-Z ]/g, "")
 }
 
@@ -111,7 +113,7 @@ export const getAssets = async (client, params) => {
     params.cursor = assetCursor;
     let assets = [];
     do {
-        let result_set = await client.getAssets({user:params.user, name:cleanString(params.name), cursor:assetCursor});
+        let result_set = await client.getAssets({user: params.user, name: cleanString(params.name), cursor: assetCursor});
         assets = assets.concat(result_set.result);
         assetCursor = result_set.cursor;
     } while (assetCursor);
@@ -155,7 +157,6 @@ export function comparePrice(price, avg) {
         rs.value = diff - 100;
         rs.sign = '+'
     }
-
     return rs;
 }
 
@@ -207,7 +208,7 @@ export function formatEther(imx) {
     return ethers.utils.formatEther(imx);
 }
 
-export function parseEther(num){
+export function parseEther(num) {
     return ethers.utils.parseEther(num)
 }
 
@@ -229,4 +230,8 @@ const getTrades = async (client) => {
         tradeCursor = result_set.cursor;
     } while (tradeCursor);
     return trades;
+}
+
+export const getDiscord = async () => {
+    return new Webhook(conf.DISCORD_WEBHOOK);
 }
