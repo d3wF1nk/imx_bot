@@ -85,7 +85,7 @@ export const doSell = async (client, asset, price) => {
                 type: ERC721TokenType.ERC721,
                 data: {
                     tokenAddress: asset.sell.data.token_address,
-                    tokenId: asset.token_id.toLowerCase(),
+                    tokenId: asset.sell.data.token_id.toLowerCase(),
                 },
             },
             tokenBuy: {
