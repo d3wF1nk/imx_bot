@@ -46,7 +46,7 @@ function loop(client) {
             if (diff > 0.000005) {
                 toSell.push({
                     item : await doTrade(client, t),
-                    price: (t.buy.data.quantity.add(parseEther(diff.toString())).min(parseEther(vars.X_VAL.toString())))
+                    price: (t.buy.data.quantity.add(parseEther(diff.toString())).sub(parseEther(vars.X_VAL.toString())))
                 })
                 break;
             }
