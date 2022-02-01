@@ -23,5 +23,6 @@ export const dev_env = {
 }
 
 export const vars = {
-    MAX_TIME: 100
+    MAX_TIME: 20,
+    X_VAL: 0.000001
 }

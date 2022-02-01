@@ -47,5 +47,5 @@ export const getAvg = async (tokenProto) => {
 }
 
 export function composeUrl(item) {
-    return `[immutable]  https://market.x.immutable.com/assets/${item.sell.data.token_address}/${item.sell.data.token_id}\n[tokentrove] https://tokentrove.com/collection/GodsUnchainedCards/${getTokenProto(item)}`;
+    return `[immutable]  https://market.x.immutable.com/assets/${item.sell.data.token_address}/${item.sell.data.token_id}  [tokentrove]  https://tokentrove.com/collection/GodsUnchainedCards/${getTokenProto(item)}`;
 }

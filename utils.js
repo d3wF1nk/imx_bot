@@ -41,41 +41,50 @@ export const doConnect = async () => {
 }
 
 export const doTrade = async (client, order) => {
-    console.log(order)
-
-    return await client.createTrade({
-        user: client.address,
-        orderId: order.order_id,
-        amountBuy: order.sell.data.quantity,
-        amountSell: order.buy.data.quantity,
-        tokenBuy: {
-            type: ERC721TokenType.ERC721,
-            data: {
-                tokenId: order.sell.data.token_id,
-                tokenAddress: order.sell.data.token_address,
+    let trade;
+    try{
+        trade = await client.createTrade({
+            user: client.address,
+            orderId: order.order_id,
+            amountBuy: order.sell.data.quantity,
+            amountSell: order.buy.data.quantity,
+            tokenBuy: {
+                type: ERC721TokenType.ERC721,
+                data: {
+                    tokenId: order.sell.data.token_id,
+                    tokenAddress: order.sell.data.token_address,
+                },
             },
-        },
-        tokenSell: {
-            type: ETHTokenType.ETH,
-            data: {
-                decimals: 18
+            tokenSell: {
+                type: ETHTokenType.ETH,
+                data: {
+                    decimals: 18
+                }
             }
-        }
-    })
+        })
+        console.log("Token", trade?.token_id, "has been bought!");
+    }catch (err) {
+        console.log(err)
+        console.error("There was an issue creating trade for NFT token ID", trade?.token_id);
+        return 0;
+    }
+    return order;
 }
 
 //todo:
 export const doSell = async (client, asset, price) => {
+    if(asset === 0 || asset === undefined || asset === null)
+        return 0;
     try {
         await client.createOrder({
-            amountSell: "1",
+            amountSell: 1,
             amountBuy: price,
-            user: '',
+            user: client.address,
             include_fees: true,
             tokenSell: {
                 type: ERC721TokenType.ERC721,
                 data: {
-                    tokenAddress: '',
+                    tokenAddress: asset.sell.data.token_address,
                     tokenId: asset.token_id.toLowerCase(),
                 },
             },
@@ -86,22 +95,36 @@ export const doSell = async (client, asset, price) => {
                 },
             },
         });
-        console.log("Token", asset.token_id.toLowerCase(), "has been listed for sale!");
+        console.log("Token", asset.sell.data.properties.name, "has been listed for sale!");
+        return 1;
     } catch (err) {
         console.log(err)
         console.error("There was an issue creating sale for NFT token ID", asset.token_id.toLowerCase());
+        return 0;
     }
 }
+export function cleanString(str){
+    return str.replace(/[^a-zA-Z ]/g, "")
+}
 
-export const getAssets = async (client) => {
+export const getAssets = async (client, params) => {
     let assetCursor;
+    params.cursor = assetCursor;
     let assets = [];
     do {
-        let result_set = await client.getAssets({user: client.address, cursor: assetCursor});
+        let result_set = await client.getAssets({user:params.user, name:cleanString(params.name), cursor:assetCursor});
         assets = assets.concat(result_set.result);
         assetCursor = result_set.cursor;
     } while (assetCursor);
     return assets;
+}
+
+export const isAlreadyBought = async (client, item) => {
+    const copies = await getAssets(client, {
+        user: client.address,
+        name: item.sell.data.properties.name
+    });
+    return copies.length >= 1
 }
 
 export const getOrders = async (client) => {
@@ -109,30 +132,42 @@ export const getOrders = async (client) => {
     let result_set = await client.getOrders({
         order_by: 'timestamp',
         page_size: 50,
-        status:'active',
-        collection:{name:'Gods Unchained'}
+        status: 'active',
+        collection: {name: 'Gods Unchained'},
+        sell_token_type: ERC721TokenType.ERC721,
+        buy_token_type: ETHTokenType.ETH
     });
     orders = orders.concat(result_set.result);
     return orders;
 }
 
-export const isTrap = async (client, item) =>{
+export const getDiff = async (client, item) => {
     let orders = [];
     let result_set = await client.getOrders({
-        order_by: 'timestamp',
-        page_size: 50,
-        status:'active',
-        collection:{name:'Gods Unchained'},
-        name:item.sell.data.properties.name
+        order_by: 'buy_quantity',
+        direction: 'asc',
+        page_size: 5,
+        status: 'active',
+        sell_token_address: item.sell.data.token_address,
+        sell_token_name: cleanString(item.sell.data.properties.name),
+        sell_token_type: ERC721TokenType.ERC721,
+        buy_token_type: ETHTokenType.ETH,
+        include_fees: true
     });
-    orders = orders.concat(result_set.result).filter(i => i.order_id !== item.order_id);
-    let cheap = orders.reduce(function(prev, curr) {
+    orders = orders.concat(result_set.result)
+    if (orders.length <= 0) return 0;
+    orders = orders.filter(i => i.order_id !== item.order_id);
+    let cheap = orders.reduce(function (prev, curr) {
         return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
     });
-    if(item.buy.data.quantity.lt(cheap.buy.data.quantity)){
-        const diff = formatEther(item.buy.data.quantity.sub(cheap.buy.data.quantity));
+    console.log(`${formatEther(item.buy.data.quantity)} cost less than ${formatEther(cheap.buy.data.quantity)}?`)
+    if (item.buy.data.quantity.lt(cheap.buy.data.quantity)) {
+        const diff = formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity));
         console.log(diff)
+        if (diff > 0.000005)
+            return diff;
     }
+    return 0;
 }
 
 export function getTokenProto(item) {
@@ -152,6 +187,10 @@ export function getTokenProto(item) {
 
 export function formatEther(imx) {
     return ethers.utils.formatEther(imx);
+}
+
+export function parseEther(num){
+    return ethers.utils.parseEther(num)
 }
 
 export const getBalances = async (client) => {
