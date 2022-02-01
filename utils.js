@@ -1,4 +1,4 @@
-import {BigNumber, ethers, providers} from "ethers";
+import {ethers, providers} from "ethers";
 import {ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import wallet from "@ethersproject/wallet";
 import {dev_env as conf} from "./config.js";
@@ -64,17 +64,18 @@ export const doTrade = async (client, order) => {
     })
 }
 
+//todo:
 export const doSell = async (client, asset, price) => {
     try {
         await client.createOrder({
             amountSell: "1",
             amountBuy: price,
-            user: TOKEN_ADDRESS,
+            user: '',
             include_fees: true,
             tokenSell: {
                 type: ERC721TokenType.ERC721,
                 data: {
-                    tokenAddress: TOKEN_ADDRESS.toLowerCase(),
+                    tokenAddress: '',
                     tokenId: asset.token_id.toLowerCase(),
                 },
             },
@@ -127,6 +128,7 @@ export const getBalances = async (client) => {
     return balances;
 }
 
+//todo:
 const getTrades = async (client) => {
     let tradeCursor;
     let trades = [];
