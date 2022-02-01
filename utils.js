@@ -212,10 +212,7 @@ export function parseEther(num){
 }
 
 export const getBalances = async (client) => {
-    const balances = await client.getBalances({user: client.address});
-    let eth = formatEther(balances.imx);
-    console.log(`ETH:${eth}`)
-    return balances;
+    return await client.getBalances({user: client.address});
 }
 
 //todo:

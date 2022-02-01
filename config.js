@@ -23,6 +23,7 @@ export const dev_env = {
 }
 
 export const vars = {
-    MAX_TIME: 20,
-    X_VAL: 0.000001
+    MAX_TIME: 20,//MAX_TIME_FROM_LAST_TRADE_ACCEPTED
+    X_VAL: 0.000001,//DIFFERENCE_FROM_LOWEST_PRICE
+    N_DIV: 10 //LIMIT_BUY
 }

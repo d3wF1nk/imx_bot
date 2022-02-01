@@ -1,21 +1,31 @@
 import {comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
 import {composeUrl, getAvg} from "./tt.js";
 import {vars} from "./config.js";
+import {BigNumber} from "ethers";
 
 const client = await doConnect();
+let prev_balance = BigNumber.from(0);
+
 loop(client)
 
-//loopin'
+//looping
 function loop(client) {
     setTimeout(async () => {
-        console.log('\nstart-loop()')
+        console.log('\nstart-loop(*)')
+
+        //Balance
         let balance = await getBalances(client);
+        const bal_diff = comparePrice(formatEther(balance.imx),formatEther(prev_balance))
+        prev_balance = balance.imx
+        console.log(`ETH:${formatEther(balance.imx)}(${bal_diff.sign}${bal_diff.value}%)`)
+
+        //Getting the latest items
         const order = await getOrders(client);
 
         //Potential buy
         let potBuy = [];
         order.forEach(o => {
-            if (o?.buy?.data?.quantity?.lt(balance?.imx?.div(3))) {
+            if (o?.buy?.data?.quantity?.lt(balance?.imx?.div(vars.N_DIV))) {
                 potBuy.push(o);
             }
         })
