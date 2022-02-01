@@ -1,7 +1,7 @@
 import {ethers, providers} from "ethers";
 import {ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import wallet from "@ethersproject/wallet";
-import {dev_env as conf} from "./prod_config.js";
+import {env as conf} from "./prod_config.js";
 
 export const getProvider = (provider_name) => {
     let provider;
@@ -108,11 +108,46 @@ export const getOrders = async (client) => {
     let orders = [];
     let result_set = await client.getOrders({
         order_by: 'timestamp',
-        page_size: 100,
-        status:'active'
+        page_size: 50,
+        status:'active',
+        collection:{name:'Gods Unchained'}
     });
     orders = orders.concat(result_set.result);
     return orders;
+}
+
+export const isTrap = async (client, item) =>{
+    let orders = [];
+    let result_set = await client.getOrders({
+        order_by: 'timestamp',
+        page_size: 50,
+        status:'active',
+        collection:{name:'Gods Unchained'},
+        name:item.sell.data.properties.name
+    });
+    orders = orders.concat(result_set.result).filter(i => i.order_id !== item.order_id);
+    let cheap = orders.reduce(function(prev, curr) {
+        return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
+    });
+    if(item.buy.data.quantity.lt(cheap.buy.data.quantity)){
+        const diff = formatEther(item.buy.data.quantity.sub(cheap.buy.data.quantity));
+        console.log(diff)
+    }
+}
+
+export function getTokenProto(item) {
+    const params = new URLSearchParams(item.sell.data.properties.image_url)
+    let id = params.get('https://card.godsunchained.com/?id');
+    let q = params.get('q')
+    /*
+    * q = quality ::
+    * 1 - platinum
+    * 2 - gold
+    * 3 - shadow
+    * 4 - meteor
+    */
+    if (q !== '4') return 0
+    return `${id}-${q}`;
 }
 
 export function formatEther(imx) {

@@ -21,3 +21,7 @@ export const dev_env = {
     API_KEY_ALCHEMY: '',
     API_KEY_ETHERSCAN: ''
 }
+
+export const vars = {
+    MAX_TIME: 100
+}
