@@ -1,7 +1,7 @@
 import {ethers, providers} from "ethers";
 import {ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import wallet from "@ethersproject/wallet";
-import {dev_env as conf} from "./config.js";
+import {dev_env as conf} from "./prod_config.js";
 
 export const getProvider = (provider_name) => {
     let provider;
@@ -44,7 +44,7 @@ export const doTrade = async (client, order) => {
     console.log(order)
 
     return await client.createTrade({
-        user: order.user,
+        user: client.address,
         orderId: order.order_id,
         amountBuy: order.sell.data.quantity,
         amountSell: order.buy.data.quantity,

@@ -1,3 +1,4 @@
 # Project exclude paths
 /node_modules/
-/my_config.js
+/config.js
+/prod_config.js

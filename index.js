@@ -13,6 +13,8 @@ order.forEach(o => {
 console.log(toBuy.length)
 
 console.log(toBuy[0].buy?.data?.quantity.toString());
+console.log('is less than')
 console.log(balance.imx.toString());
+console.log(toBuy[0].buy?.data?.quantity.lt(balance?.imx))
 
-const trade = await doTrade(client,toBuy[1]);
+const trade = await doTrade(client,toBuy[0]);
