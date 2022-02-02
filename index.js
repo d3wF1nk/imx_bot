@@ -20,7 +20,7 @@ function loop(client) {
         let balance = await getBalances(client);
         const bal_diff = comparePrice(formatEther(balance.imx), formatEther(prev_balance))
         prev_balance = balance.imx
-        console.log(`ETH:${formatEther(balance.imx)}(${bal_diff.sign}${bal_diff.value}%)`)
+        console.log(`ETH:${parseFloat(formatEther(balance.imx) || 0).toFixed(6)}(${bal_diff.sign}${bal_diff.value}%)`)
 
         //Sending discord notification comment these line if you don't need
         if (bal_diff.value !== 0)
@@ -66,7 +66,7 @@ function loop(client) {
             const diff = await getDiff(client, t)
             if (diff > calcPercentageOf(vars.CRESTA,formatEther(t.buy.data.quantity))) {
                 console.log(`MIN_CRESTA is :${calcPercentageOf(vars.CRESTA,formatEther(t.buy.data.quantity)).toFixed(6)}`);
-                console.log(`DIFF is :${diff.toFixed(6)}`);
+                console.log(`DIFF is :${(parseFloat(diff) || 0).toFixed(6)}`);
                 toSell.push({
                     item: await doTrade(client, t),
                     price: (t.buy.data.quantity.add(parseEther(diff.toString())).sub(parseEther(vars.X_VAL.toString())))
