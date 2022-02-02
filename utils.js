@@ -1,7 +1,7 @@
 import {ethers, providers} from "ethers";
 import {ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import wallet from "@ethersproject/wallet";
-import {env as conf} from "./prod_config.js";
+import {env as conf} from "./config.js";
 import { Webhook } from 'discord-webhook-node';
 
 export const getProvider = (provider_name) => {
