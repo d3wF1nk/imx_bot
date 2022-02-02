@@ -62,8 +62,9 @@ function loop(client) {
             if (await isAlreadyBought(client, t))
                 continue;
             const diff = await getDiff(client, t)
-            if (diff > calcPercentageOf(vars.CRESTA,formatEther(balance))) {
-                //console.log(calcPercentageOf(vars.CRESTA,formatEther(balance)));
+            if (diff > calcPercentageOf(vars.CRESTA,formatEther(t.buy.data.quantity))) {
+                console.log(`MIN_CRESTA is :${calcPercentageOf(vars.CRESTA,formatEther(t.buy.data.quantity))}`);
+                console.log(`DIFF is :${diff}`);
                 toSell.push({
                     item: await doTrade(client, t),
                     price: (t.buy.data.quantity.add(parseEther(diff.toString())).sub(parseEther(vars.X_VAL.toString())))
