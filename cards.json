@@ -23,6 +23,58 @@
     {
       "name": "Grand Vault",
       "id": "1437"
+    },
+    {
+      "name": "Harrowing Visions",
+      "id": "1369"
+    },
+    {
+      "name": "Inquisitor Informant",
+      "id": "1340"
+    },
+    {
+      "name": "Inconspicuous Bush",
+      "id": "1330"
+    },
+    {
+      "name": "Veteran Hoplite",
+      "id": "873"
+    },
+    {
+      "name": "Ominous Burrow",
+      "id": "1466"
+    },
+    {
+      "name": "Tracking Bolt",
+      "id": "1243"
+    },
+    {
+      "name": "Golden Curse",
+      "id": "1453"
+    },
+    {
+      "name": "Orcish Elite",
+      "id": "1022"
+    },
+    {
+      "name": "Helm Hustler",
+      "id": "1454"
+    },
+    {
+      "name": "Miasmic Forge",
+      "id": "1376"
+    },
+    {
+      "name": "Undead Roach",
+      "id": "1300"
+    },
+    {
+      "name": "Moonlight Charm",
+      "id": "1318"
+    },
+    {
+      "name": "Scholar of Power",
+      "id": "1383"
     }
   ]
 }

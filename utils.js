@@ -1,7 +1,7 @@
 import {ethers, providers} from "ethers";
 import {ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import wallet from "@ethersproject/wallet";
-import {env as conf} from "./config.js";
+import {env as conf, vars} from "./config.js";
 import { Webhook } from 'discord-webhook-node';
 
 export const getProvider = (provider_name) => {
@@ -132,7 +132,7 @@ export const getOrders = async (client) => {
     let orders = [];
     let result_set = await client.getOrders({
         order_by: 'timestamp',
-        page_size: 50,
+        page_size: vars.LIST_SIZE,
         status: 'active',
         collection: {name: 'Gods Unchained'},
         sell_token_type: ERC721TokenType.ERC721,
