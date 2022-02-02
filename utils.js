@@ -66,7 +66,7 @@ export const doTrade = async (client, order) => {
         console.log(`${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`);
     } catch (err) {
         console.log(err)
-        console.error("There was an issue creating trade for NFT token ID", order?.token_id);
+        console.error("There was an issue creating trade for NFT token ID", order?.order_id);
         return 0;
     }
     return order;
@@ -99,7 +99,7 @@ export const doSell = async (client, asset, price) => {
         return 'done';
     } catch (err) {
         console.log(err)
-        console.error("There was an issue creating sale for NFT token ID", asset.token_id.toLowerCase());
+        console.error("There was an issue creating sale for NFT token ID", asset.sell.data.properties.name);
         return 'fail';
     }
 }
@@ -187,6 +187,10 @@ export const getDiff = async (client, item) => {
             return diff;
     }
     return 0;
+}
+
+export function getId(item){
+    return new URLSearchParams(item.sell.data.properties.image_url).get('https://card.godsunchained.com/?id');
 }
 
 export function getTokenProto(item) {

@@ -1,7 +1,8 @@
-import {calcPercentageOf, comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getDiscord, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
+import {calcPercentageOf, comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getDiscord, getId, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
 import {composeUrl, getAvg} from "./tt.js";
 import {vars} from "./config.js";
 import {BigNumber} from "ethers";
+import { readFile } from 'fs/promises';
 
 //comment this if u don have WebHook
 const hook = await getDiscord()
@@ -27,7 +28,18 @@ function loop(client) {
             await hook.send((`${bal_diff.sign}${bal_diff.value}%`))
 
         //Getting the latest items
-        const order = await getOrders(client);
+        let order = await getOrders(client);
+        console.log(`\ntot_order: ${order.length}`)
+
+        //Get cards lists
+        let cards_url = new URL('./cards.json', import.meta.url)
+        let json_file =  await readFile(cards_url)
+        const b_cards = JSON.parse(json_file)?.cards;
+
+        //Remove blacklisted cards:
+        if(b_cards?.length>0)
+            order = order.filter(o => b_cards.filter(b => b.id === getId(o)).length === 0 )
+        console.log(`no_b_card: ${order.length}`)
 
         //Potential buy
         let potBuy = [];
@@ -36,7 +48,7 @@ function loop(client) {
                 potBuy.push(o);
             }
         })
-        console.log(`\npot_buy: ${potBuy.length}`)
+        console.log(`pot_buy: ${potBuy.length}`)
 
         //Frequently buy
         let topBuy = []

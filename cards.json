@@ -1,0 +1,28 @@
+{
+  "cards": [
+    {
+      "name": "Ballista",
+      "id": "1204"
+    },
+    {
+      "name": "Blood Armor",
+      "id": "1359"
+    },
+    {
+      "name": "Echoing Fury",
+      "id": "1479"
+    },
+    {
+      "name": "Illustrious Planetar",
+      "id": "1419"
+    },
+    {
+      "name": "Pan Forgemaster",
+      "id": "1360"
+    },
+    {
+      "name": "Grand Vault",
+      "id": "1437"
+    }
+  ]
+}
