@@ -1,7 +1,7 @@
 export const env = {
     PRIVATE_WALLET_KEY: '',
     IMXURL: 'https://api.x.immutable.com/v1',
-    STARK: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
+    STARK: '',
     REGISTRATION: '0x72a06bf2a1CE5e39cBA06c0CAb824960B587d64c',
     NETWORK: 'mainnet',
     API_KEY_INFURA: '',
@@ -13,7 +13,7 @@ export const env = {
 export const dev_env = {
     PRIVATE_WALLET_KEY: '',
     IMXURL: "https://api.ropsten.x.immutable.com/v1",
-    STARK: "0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef",
+    STARK: "",
     REGISTRATION: "0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864",
 
     NETWORK: 'ropsten',
