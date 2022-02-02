@@ -1,4 +1,4 @@
-import {comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getDiscord, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
+import {calcPercentageOf, comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getDiscord, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
 import {composeUrl, getAvg} from "./tt.js";
 import {vars} from "./config.js";
 import {BigNumber} from "ethers";
@@ -62,7 +62,8 @@ function loop(client) {
             if (await isAlreadyBought(client, t))
                 continue;
             const diff = await getDiff(client, t)
-            if (diff > 0.000005) {
+            if (diff > calcPercentageOf(vars.CRESTA,formatEther(balance))) {
+                //console.log(calcPercentageOf(vars.CRESTA,formatEther(balance)));
                 toSell.push({
                     item: await doTrade(client, t),
                     price: (t.buy.data.quantity.add(parseEther(diff.toString())).sub(parseEther(vars.X_VAL.toString())))

@@ -235,3 +235,7 @@ const getTrades = async (client) => {
 export const getDiscord = async () => {
     return new Webhook(conf.DISCORD_WEBHOOK);
 }
+
+export const calcPercentageOf = (percentage,base) =>{
+    return ((base / 100) * percentage);
+}
