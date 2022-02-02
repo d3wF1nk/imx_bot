@@ -20,6 +20,7 @@ export const dev_env = {
     API_KEY_INFURA: '',
     API_KEY_ALCHEMY: '',
     API_KEY_ETHERSCAN: '',
+    DISCORD_WEBHOOK:''
 }
 
 export const vars = {
