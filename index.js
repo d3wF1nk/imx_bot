@@ -3,7 +3,9 @@ import {composeUrl, getAvg} from "./tt.js";
 import {vars} from "./config.js";
 import {BigNumber} from "ethers";
 
+//comment this if u don have WebHook
 const hook = await getDiscord()
+
 const client = await doConnect();
 let prev_balance = BigNumber.from(0);
 
@@ -20,7 +22,7 @@ function loop(client) {
         prev_balance = balance.imx
         console.log(`ETH:${formatEther(balance.imx)}(${bal_diff.sign}${bal_diff.value}%)`)
 
-        //Sending discord notification
+        //Sending discord notification comment these line if you don't need
         if (bal_diff.value !== 0)
             await hook.send((`${bal_diff.sign}${bal_diff.value}%`))
 
