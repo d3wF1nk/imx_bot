@@ -1,8 +1,8 @@
 import {calcPercentageOf, comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getDiscord, getId, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
-import {composeUrl, getAvg} from "./tt.js";
+import {readFile} from "fs/promises";
 import {vars} from "./config.js";
+import {composeUrl, getAvg} from "./tt.js";
 import {BigNumber} from "ethers";
-import { readFile } from 'fs/promises';
 
 //comment this if u don have WebHook
 const hook = await getDiscord()
@@ -12,10 +12,9 @@ let prev_balance = BigNumber.from(0);
 
 loop(client)
 
-//looping
 function loop(client) {
     setTimeout(async () => {
-        console.log('\nstart-loop(*)')
+        console.log('\nstart-async-loop(*)')
 
         //Balance
         let balance = await getBalances(client);
@@ -49,6 +48,8 @@ function loop(client) {
             }
         })
         console.log(`pot_buy: ${potBuy.length}`)
+
+        //f r o m - t h e r e - a s y n c - d o - i t - b e t t e r
 
         //Frequently buy
         let topBuy = []
@@ -93,5 +94,5 @@ function loop(client) {
         })
 
         loop(client)
-    }, 1000)
+    }, vars.SET_TIMEOUT)
 }
