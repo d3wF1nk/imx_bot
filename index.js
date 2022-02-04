@@ -66,7 +66,8 @@ function loop(client) {
             if (tp !== 0) {
                 const avg = await getAvg(tp)
                 if (avg !== 0)
-                    if (avg.last_date < vars.MAX_TIME)
+                    if (!(vars.MAX_TIME) || avg.last_date < vars.MAX_TIME)
+                        if (!(vars.MIN_AMOUNT_TRADE) || avg.daily_amount > vars.MIN_AMOUNT_TRADE)
                         if (avg.avg_price > Utils.formatEther(p.sell.data.quantity))
                             if (avg.last_price > Utils.formatEther(p.buy.data.quantity)) {
                                 const diff = Utils.comparePrice(Utils.formatEther(p.buy.data.quantity), avg.avg_price)

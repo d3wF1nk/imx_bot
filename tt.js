@@ -28,6 +28,7 @@ export const getAvg = async (tokenProto) => {
      * @property {number} a.filledTimeSeconds
      * @property {number} a.isBuy
      */
+    //get last trade
     let lastOrder = avg?.reduce((last, val) => {
         if (val.filledTimeSeconds > last.filledTimeSeconds)
             return val
@@ -36,13 +37,15 @@ export const getAvg = async (tokenProto) => {
     })
     //filter results
     let today_avg = avg?.filter(a => (a.filledTimeSeconds * 1000) > start)
-    if (today_avg === undefined || today_avg.length <= 10) return 0
+    if (today_avg === undefined || today_avg.length <= 0) return 0
     let sum_price = Math.abs(today_avg.reduce((a, b) => ({takerAssetFilledAmount: a.takerAssetFilledAmount + b.takerAssetFilledAmount})).takerAssetFilledAmount) / 1000000000000000000;
     let avg_price = (sum_price / today_avg.length || 0);
+
     return {
         last_price: parseFloat((lastOrder.takerAssetFilledAmount / 1000000000000000000).toString()).toFixed(6),
         avg_price: parseFloat(avg_price.toFixed(6)),
-        last_date: parseInt(((new Date().getTime() - new Date(lastOrder?.filledTimeSeconds * 1000)) / 60000).toString())
+        last_date: parseInt(((new Date().getTime() - new Date(lastOrder?.filledTimeSeconds * 1000)) / 60000).toString()),
+        daily_amount:today_avg.length
     }
 }
 
