@@ -1,0 +1,19 @@
+{
+  "instant": [
+    {
+      "name": "Demogorgon",
+      "id": "94",
+      "eth": 0.2
+    }
+  ],
+  "black": [
+    {
+      "name": "Ballista",
+      "id": "1204"
+    },
+    {
+      "name": "Blood Armor",
+      "id": "1359"
+    }
+  ]
+}

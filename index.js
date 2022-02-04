@@ -1,44 +1,53 @@
-import {calcPercentageOf, comparePrice, doConnect, doSell, doTrade, formatEther, getBalances, getDiff, getDiscord, getId, getOrders, getTokenProto, isAlreadyBought, parseEther} from "./utils.js";
+import * as Utils from "./utils.js";
 import {composeUrl, getAvg} from "./tt.js";
-import {vars} from "./config.js";
+import {env, vars} from "./config.js";
 import {BigNumber} from "ethers";
-import { readFile } from 'fs/promises';
+import {readFile} from 'fs/promises';
 
-//comment this if u don have WebHook
-const hook = await getDiscord()
-
-const client = await doConnect();
+const hook = await Utils.getDiscord()
+const client = await Utils.doConnect();
 let prev_balance = BigNumber.from(0);
 
 loop(client)
 
-//looping
+//loopin'
 function loop(client) {
     setTimeout(async () => {
         console.log('\nstart-loop(*)')
 
         //Balance
-        let balance = await getBalances(client);
-        const bal_diff = comparePrice(formatEther(balance.imx), formatEther(prev_balance))
+        let balance = await Utils.getBalances(client);
+        const bal_diff = Utils.comparePrice(Utils.formatEther(balance.imx), Utils.formatEther(prev_balance))
         prev_balance = balance.imx
-        console.log(`ETH:${parseFloat(formatEther(balance.imx) || 0).toFixed(6)}(${bal_diff.sign}${bal_diff.value}%)`)
+        console.log(`ETH:${parseFloat(Utils.formatEther(balance.imx) || 0).toFixed(6)}(${bal_diff.sign}${bal_diff.value}%)`)
 
-        //Sending discord notification comment these line if you don't need
+        //Sending discord notification
         if (bal_diff.value !== 0)
-            await hook.send((`${bal_diff.sign}${bal_diff.value}%`))
+            await hook?.send((`${bal_diff.sign}${bal_diff.value}%`))
 
         //Getting the latest items
-        let order = await getOrders(client);
+        let order = await Utils.getOrders(client);
         console.log(`\ntot_order: ${order.length}`)
 
         //Get cards lists
-        let cards_url = new URL('./cards.json', import.meta.url)
-        let json_file =  await readFile(cards_url)
-        const b_cards = JSON.parse(json_file)?.cards;
+        /**
+         * @type {Object} card
+         * @property {Object} card.black
+         * @property {string} black.name
+         * @property {string} black.id
+         *
+         * @property {Object} card.instant
+         * @property {string} instant.name
+         * @property {string} instant.id
+         * @property {number} a.eth
+         */
+        //let cards_url = new URL('', import.meta.url)
+        let json_file = await readFile(env.JSON_CARDS_PATH)
+        const cards = JSON.parse(json_file.toString());
 
-        //Remove blacklisted cards:
-        if(b_cards?.length>0)
-            order = order.filter(o => b_cards.filter(b => b.id === getId(o)).length === 0 )
+        //Remove black_listed cards:
+        if (cards?.black?.length > 0)
+            order = order.filter(o => cards?.black?.filter(b => b.id === Utils.getId(o)).length === 0)
         console.log(`no_b_card: ${order.length}`)
 
         //Potential buy
@@ -53,15 +62,15 @@ function loop(client) {
         //Frequently buy
         let topBuy = []
         for (const p of potBuy) {
-            const tp = getTokenProto(p)
+            const tp = Utils.getTokenProto(p)
             if (tp !== 0) {
                 const avg = await getAvg(tp)
                 if (avg !== 0)
                     if (avg.last_date < vars.MAX_TIME)
-                        if (avg.avg_price > formatEther(p.sell.data.quantity))
-                            if (avg.last_price > formatEther(p.buy.data.quantity)) {
-                                const diff = comparePrice(formatEther(p.buy.data.quantity), avg.avg_price)
-                                console.log(`[id:${p.order_id}] [avg:${avg.avg_price}] [${avg.last_date}m => last_price:${avg.last_price}] [actual_price:${formatEther(p.buy.data.quantity)}] ${p.sell.data.properties.name} (${diff.sign}${diff.value}%)${diff.alert ? '⚠ ⚠ ⚠' : ''}`)
+                        if (avg.avg_price > Utils.formatEther(p.sell.data.quantity))
+                            if (avg.last_price > Utils.formatEther(p.buy.data.quantity)) {
+                                const diff = Utils.comparePrice(Utils.formatEther(p.buy.data.quantity), avg.avg_price)
+                                console.log(`[id:${p.order_id}] [avg:${avg.avg_price}] [${avg.last_date}m => last_price:${avg.last_price}] [actual_price:${Utils.formatEther(p.buy.data.quantity)}] ${p.sell.data.properties.name} (${diff.sign}${diff.value}%)${diff.alert ? '⚠ ⚠ ⚠' : ''}`)
                                 console.log(`${composeUrl(p)}\n`)
                                 topBuy.push(p)
                             }
@@ -72,26 +81,25 @@ function loop(client) {
         //Filter && buy
         let toSell = []
         for (const t of topBuy) {
-            if (await isAlreadyBought(client, t))
+            if (await Utils.isAlreadyBought(client, t))
                 continue;
-            const diff = await getDiff(client, t)
-            if (diff > calcPercentageOf(vars.CRESTA,formatEther(t.buy.data.quantity))) {
-                console.log(`MIN_CRESTA is :${calcPercentageOf(vars.CRESTA,formatEther(t.buy.data.quantity)).toFixed(6)}`);
+            const diff = await Utils.getDiff(client, t)
+            if (diff > Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity))) {
+                console.log(`MIN_CRESTA is :${Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity)).toFixed(6)}`);
                 console.log(`DIFF is :${(parseFloat(diff) || 0).toFixed(6)}`);
                 toSell.push({
-                    item: await doTrade(client, t),
-                    price: (t.buy.data.quantity.add(parseEther(diff.toString())).sub(parseEther(vars.X_VAL.toString())))
+                    item: await Utils.doTrade(client, t, hook),
+                    price: (t.buy.data.quantity.add(Utils.parseEther(diff.toString())).sub(Utils.parseEther(vars.X_VAL.toString())))
                 })
             }
         }
         console.log(`to_sell: ${toSell.length}`)
 
-
         //Sell && log
         toSell.forEach(el => {
-            doSell(client, el.item, el.price).then(x => console.log(x))
+            Utils.doSell(client, el.item, el.price).then(x => console.log(x))
         })
 
         loop(client)
-    }, 1000)
+    }, vars.SET_TIMEOUT)
 }

@@ -41,7 +41,7 @@ export const doConnect = async () => {
     });
 }
 
-export const doTrade = async (client, order) => {
+export const doTrade = async (client, order,hook) => {
     let trade;
     try {
         trade = await client.createTrade({
@@ -65,8 +65,10 @@ export const doTrade = async (client, order) => {
         })
         console.log(`${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`);
     } catch (err) {
-        console.log(err)
-        console.error("There was an issue creating trade for NFT token ID", order?.order_id);
+        console.error(err);
+        const msg = `There was an issue creating trade for NFT TOKEN_ID:[${order.sell.data.token_id} https://immutascan.io/tx/${order.sell.data.token_id}]`
+        console.log(msg)
+        hook.send(msg)
         return 0;
     }
     return order;
@@ -99,7 +101,7 @@ export const doSell = async (client, asset, price) => {
         return 'done';
     } catch (err) {
         console.log(err)
-        console.error("There was an issue creating sale for NFT token ID", asset.sell.data.properties.name);
+        console.error("There was an issue creating sale for NFT ", asset.sell.data.properties.name);
         return 'fail';
     }
 }
@@ -179,10 +181,8 @@ export const getDiff = async (client, item) => {
     let cheap = orders.reduce(function (prev, curr) {
         return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
     });
-    //console.log(`${formatEther(item.buy.data.quantity)} cost less than ${formatEther(cheap.buy.data.quantity)}?`)
     if (item.buy.data.quantity.lt(cheap.buy.data.quantity)) {
         const diff = formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity));
-        //console.log(diff)
         if (diff > 0.000005)
             return diff;
     }
@@ -237,7 +237,7 @@ const getTrades = async (client) => {
 }
 
 export const getDiscord = async () => {
-    return new Webhook(conf.DISCORD_WEBHOOK);
+    return conf.DISCORD_WEBHOOK ? new Webhook(conf.DISCORD_WEBHOOK) : undefined
 }
 
 export const calcPercentageOf = (percentage,base) =>{

@@ -7,20 +7,8 @@ export const env = {
     API_KEY_INFURA: '',
     API_KEY_ALCHEMY: '',
     API_KEY_ETHERSCAN: '',
-    DISCORD_WEBHOOK:''
-}
-
-export const dev_env = {
-    PRIVATE_WALLET_KEY: '',
-    IMXURL: "https://api.ropsten.x.immutable.com/v1",
-    STARK: "0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef",
-    REGISTRATION: "0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864",
-
-    NETWORK: 'ropsten',
-    API_KEY_INFURA: '',
-    API_KEY_ALCHEMY: '',
-    API_KEY_ETHERSCAN: '',
-    DISCORD_WEBHOOK:''
+    DISCORD_WEBHOOK:'',
+    JSON_CARDS_PATH: './cards_example.json'
 }
 
 export const vars = {
