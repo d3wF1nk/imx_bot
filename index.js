@@ -39,11 +39,24 @@ function loop(client) {
          * @property {Object} card.instant
          * @property {string} instant.name
          * @property {string} instant.id
-         * @property {number} a.eth
+         * @property {number} instant.eth
          */
         //let cards_url = new URL('', import.meta.url)
         let json_file = await readFile(env.JSON_CARDS_PATH)
         const cards = JSON.parse(json_file.toString());
+
+        //Check for instant buy:
+        if (cards?.instant?.length > 0)
+            cards?.instant?.forEach(i => {
+                order.forEach(o => {
+                    if (i.id === Utils.getId(o) && Utils.formatEther(o.buy.data.quantity) <= i.eth){
+                        const msg = `try to snipe ${i.name} at ${Utils.formatEther(o.buy.data.quantity)} ..`
+                        console.log(msg)
+                        hook.send(msg)
+                        Utils.doTrade(client,o,hook)
+                    }
+                })
+            })
 
         //Remove black_listed cards:
         if (cards?.black?.length > 0)
