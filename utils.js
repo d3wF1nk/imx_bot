@@ -146,7 +146,7 @@ export const getOrders = async (client) => {
 
 export function comparePrice(price, avg) {
 
-    let diff = ((price / avg) * 100).toFixed();
+    let diff = ((price / avg) * 100).toFixed(1);
 
     let rs = {};
     if (price < avg && diff !== '100') {
