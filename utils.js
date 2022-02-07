@@ -63,7 +63,10 @@ export const doTrade = async (client, order,hook) => {
                 }
             }
         })
-        console.log(`${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`);
+        const msg = `${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`;
+        console.log(msg)
+        hook.send(msg)
+
     } catch (err) {
         console.error(err);
         const msg = `There was an issue creating trade for NFT TOKEN_ID:[${order.sell.data.token_id} https://immutascan.io/tx/${order.sell.data.token_id}]`
