@@ -20,5 +20,7 @@ export const vars = {
     LIST_SIZE:8,//HOW MANY ORDER CHECK EVERY LOOP
     SET_TIMEOUT:5000,//TIME WAIT BEFORE START NEW LOOP (IN MILLISECOND),
     DEBUG: false, //ENABLE_DEBUG_LOG
-    HB_RATE:300 //SEND_HEARTBEAT_EVERY_N_LOOP_ITERATION
+    HB_RATE:300, //SEND_HEARTBEAT_EVERY_N_LOOP_ITERATION
+    BOT_NAME:'my_digital_bot', //Your bot-name <3,
+    CHECK_BAL:true //check balance every loop then send msg
 }

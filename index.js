@@ -20,14 +20,14 @@ function loop(client) {
             let balance = await Utils.getBalances(client);
             const bal_diff = Utils.comparePrice(Utils.formatEther(balance.imx), Utils.formatEther(prev_balance))
             prev_balance = balance.imx
-            const banner = `ETH:${parseFloat(Utils.formatEther(balance.imx) || 0).toFixed(6)}`
+            const banner = `[${vars.BOT_NAME}] ${parseFloat(Utils.formatEther(balance.imx) || 0).toFixed(6)}`
             console.log(banner)
 
             //Sending discord notification
             if (i === vars.HB_RATE)
                 hook?.send(banner).then(() => console.log('msg_sent'))
-            if (bal_diff.value !== 0)
-                hook?.send(`${bal_diff.sign}${bal_diff?.value?.toFixed(1)}%`).then(() => console.log('msg_sent'))
+            if (bal_diff.value !== 0 && bal_diff.sign)
+                if(vars.CHECK_BAL) hook?.send(`[${vars.BOT_NAME}] ${bal_diff.sign}${bal_diff?.value?.toFixed(1)}%`).then(() => console.log('msg_sent'))
 
             //Getting the latest items
             let order = await Utils.getOrders(client);
