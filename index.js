@@ -27,7 +27,7 @@ function loop(client) {
             if (i === vars.HB_RATE)
                 hook?.send(banner).then(() => console.log('msg_sent'))
             if (bal_diff.value !== 0 && bal_diff.sign)
-                if(vars.CHECK_BAL) hook?.send(`[${vars.BOT_NAME}] ${bal_diff.sign}${bal_diff?.value?.toFixed(1)}%`).then(() => console.log('msg_sent'))
+                if(vars.CHECK_BAL) hook?.send(`[${vars.BOT_NAME}] : ${bal_diff.sign}${bal_diff?.value?.toFixed(1)}%`).then(() => console.log('msg_sent'))
 
             //Getting the latest items
             let order = await Utils.getOrders(client);
