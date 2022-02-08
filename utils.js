@@ -262,10 +262,6 @@ export function filterOutliers (someArray) {
     maxValue = q3 + iqr * 1.5;
     minValue = q1 - iqr * 1.5;
 
-    //invalid range
-    if (minValue * 10 < maxValue)
-        return [];
-
     return values.filter((x) => (x >= minValue) && (x <= maxValue));
 }
 

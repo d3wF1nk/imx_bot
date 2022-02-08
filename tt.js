@@ -40,7 +40,8 @@ export const getAvg = async (tokenProto) => {
 
     //remove outliers
     today_avg = Utils.filterOutliers(today_avg);
-    if (today_avg.length <= 0) {console.error('BOT_TRAP_DETECTED: outlier_in_avg'); return 0}
+    if (today_avg[0] * 10 < today_avg[today_avg.length-1])
+        today_avg = today_avg.filter(x=> x < today_avg[today_avg.length-1] * 0.05)
 
     //get avg
     let sum_price = Math.abs(today_avg.reduce((a, b) => (a + b)) / 1000000000000000000);
