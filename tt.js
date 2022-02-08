@@ -44,10 +44,12 @@ export const getAvg = async (tokenProto) => {
     if (today_avg[0] * 10 < today_avg[today_avg.length - 1])
         today_avg = today_avg.filter(x => x < today_avg[today_avg.length - 1] * 0.05)
 
+    if (!today_avg?.length > 0) return 0
+
     //get avg
-    let sum_price = Math.abs(today_avg.reduce((a, b) => (a + b)) / 1000000000000000000);
-    let avg_price = (sum_price / today_avg.length || 0);
-    let last_price = (lastOrder.takerAssetFilledAmount / 1000000000000000000);
+    let sum_price = Math.abs(today_avg?.reduce((a, b) => (a + b)) / 1000000000000000000);
+    let avg_price = (sum_price / today_avg?.length || 0);
+    let last_price = (lastOrder?.takerAssetFilledAmount / 1000000000000000000);
 
     let i = 0;
     while (last_price > (avg_price * 10) && i <= avg.length) {
