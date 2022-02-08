@@ -11,6 +11,7 @@ let prev_balance = BigNumber.from(0);
 //loopin'
 let i = 1;
 loop(client)
+
 function loop(client) {
     try {
         setTimeout(async () => {
@@ -27,7 +28,7 @@ function loop(client) {
             if (i === vars.HB_RATE)
                 hook?.send(banner).then(() => console.log('msg_sent'))
             if (bal_diff.value !== 0 && bal_diff.sign)
-                if(vars.CHECK_BAL) hook?.send(`[${vars.BOT_NAME}] ${bal_diff.sign}${bal_diff?.value?.toFixed(1)}%`).then(() => console.log('msg_sent'))
+                if (vars.CHECK_BAL) hook?.send(`[${vars.BOT_NAME}] ${bal_diff.sign}${bal_diff?.value?.toFixed(1)}%`).then(() => console.log('msg_sent'))
 
             //Getting the latest items
             let order = await Utils.getOrders(client);
@@ -40,12 +41,15 @@ function loop(client) {
              * @property {string} black.name
              * @property {string} black.id
              *
+             * @property {Object} card.white
+             * @property {string} white.name
+             * @property {string} white.id
+             *
              * @property {Object} card.instant
              * @property {string} instant.name
              * @property {string} instant.id
              * @property {number} instant.eth
              */
-                //let cards_url = new URL('', import.meta.url)
             let json_file = await readFile(env.JSON_CARDS_PATH)
             const cards = JSON.parse(json_file.toString());
 
@@ -62,10 +66,12 @@ function loop(client) {
                     })
                 })
 
-            //Remove black_listed cards:
-            if (cards?.black?.length > 0)
+            //Black || White
+            if (cards?.white?.length > 0)
+                order = order.filter(o => cards?.white?.filter(b => b.id === Utils.getId(o)).length > 0)
+            else if (cards?.black?.length > 0)
                 order = order.filter(o => cards?.black?.filter(b => b.id === Utils.getId(o)).length === 0)
-            console.log(`no_b_card: ${order.length}`)
+            console.log(`filtered_card: ${order.length}`)
 
             //Potential buy
             let potBuy = [];
