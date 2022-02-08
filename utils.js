@@ -246,3 +246,42 @@ export const getDiscord = async () => {
 export const calcPercentageOf = (percentage,base) =>{
     return ((base / 100) * percentage);
 }
+
+export function filterOutliers (someArray) {
+    if (someArray.length < 4) {
+        return someArray;
+    }
+
+    let values = someArray.slice().sort((a, b) => a - b); // copy array fast and sort
+
+    let q1 = getQuantile(values, 25);
+    let q3 = getQuantile(values, 75);
+
+    let iqr, maxValue, minValue;
+    iqr = q3 - q1;
+    maxValue = q3 + iqr * 1.5;
+    minValue = q1 - iqr * 1.5;
+
+    //invalid range
+    if (minValue * 10 < maxValue)
+        return [];
+
+    return values.filter((x) => (x >= minValue) && (x <= maxValue));
+}
+
+function getQuantile (array, quantile) {
+    // Get the index the quantile is at.
+    let index = quantile / 100.0 * (array.length - 1);
+
+    // Check if it has decimal places.
+    if (index % 1 === 0) {
+        return array[index];
+    } else {
+        // Get the lower index.
+        let lowerIndex = Math.floor(index);
+        // Get the remaining.
+        let remainder = index - lowerIndex;
+        // Add the remaining to the lowerindex value.
+        return array[lowerIndex] + remainder * (array[lowerIndex + 1] - array[lowerIndex]);
+    }
+}
