@@ -69,7 +69,7 @@ export const doTrade = async (client, order,hook) => {
 
     } catch (err) {
         console.error(err);
-        const msg = `There was an issue creating trade for NFT TOKEN_ID:[${order.sell.data.token_id} https://immutascan.io/tx/${order.sell.data.token_id}]`
+        const msg = `There was an issue creating trade for NFT TOKEN_ID:[${order.sell.data.token_id} https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c/${order.sell.data.token_id}]`
         console.log(msg)
         if (vars.DEBUG) hook.send(`[${vars.BOT_NAME}] ${msg}`)
         return 0;
@@ -110,7 +110,7 @@ export const doSell = async (client, asset, price) => {
 }
 
 export function cleanString(str) {
-    return str.replace(/[^a-zA-Z ]/g, "")
+    return str?.replace(/[^a-zA-Z ]/g, "")
 }
 
 export const getAssets = async (client, params) => {
@@ -179,16 +179,21 @@ export const getDiff = async (client, item) => {
         include_fees: true
     });
     orders = orders.concat(result_set.result)
-    if (orders.length <= 0) return 0;
+    if (orders.length <= 0){
+        if(vars.DEBUG) console.log(`${cleanString(item.sell.data.properties.name)} [ALREADY_SOLD]`);
+        return 0;
+    }
     orders = orders.filter(i => i.order_id !== item.order_id);
     let cheap = orders.reduce(function (prev, curr) {
         return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
     });
     if (item.buy.data.quantity.lt(cheap.buy.data.quantity)) {
         const diff = formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity));
-        if (diff > 0.000005)
+        if(vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
+        if (diff > vars.MIN_DIFF)
             return diff;
     }
+    if(vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
     return 0;
 }
 

@@ -3,6 +3,7 @@ import {composeUrl, getAvg} from "./tt.js";
 import {env, vars} from "./config.js";
 import {BigNumber} from "ethers";
 import {readFile} from 'fs/promises';
+import {parseEther} from "./utils.js";
 
 const hook = await Utils.getDiscord()
 const client = await Utils.doConnect();
@@ -77,29 +78,33 @@ function loop(client) {
             let potBuy = [];
             order.forEach(o => {
                 if (o?.buy?.data?.quantity?.lt(balance?.imx?.div(vars.N_DIV))) {
-                    potBuy.push(o);
+                    if (o?.buy?.data?.quantity?.gte(parseEther(vars.MIN_PRICE?.toString())))
+                        potBuy.push(o);
                 }
             })
             console.log(`pot_buy: ${potBuy.length}`)
 
             //Frequently buy
             let topBuy = []
-            for (const p of potBuy) {
-                const tp = Utils.getTokenProto(p)
-                if (tp !== 0) {
-                    const avg = await getAvg(tp)
-                    if (avg !== 0)
-                        if (!(vars.MAX_TIME) || avg.last_date < vars.MAX_TIME)
-                            if (!(vars.MIN_AMOUNT_TRADE) || avg.daily_amount > vars.MIN_AMOUNT_TRADE)
-                                if (avg.avg_price > Utils.formatEther(p.buy.data.quantity))
-                                    if (avg.last_price > Utils.formatEther(p.buy.data.quantity)) {
-                                        const diff = Utils.comparePrice(Utils.formatEther(p.buy.data.quantity), avg.avg_price)
-                                        console.log(`[id:${p.order_id}] [avg:${avg.avg_price}] [${avg.last_date}m => last_price:${avg.last_price}] [actual_price:${Utils.formatEther(p.buy.data.quantity)}] ${p.sell.data.properties.name} (${diff?.sign}${diff?.value?.toFixed(1)}%)${diff.alert ? '⚠ ⚠ ⚠' : ''}`)
-                                        console.log(`${composeUrl(p)}\n`)
-                                        topBuy.push(p)
-                                    }
+            if (vars.DISABLE_TT)
+                topBuy = potBuy;
+            else
+                for (const p of potBuy) {
+                    const tp = Utils.getTokenProto(p)
+                    if (tp !== 0) {
+                        const avg = await getAvg(tp)
+                        if (avg !== 0)
+                            if (!(vars.MAX_TIME) || avg.last_date < vars.MAX_TIME)
+                                if (!(vars.MIN_AMOUNT_TRADE) || avg.daily_amount > vars.MIN_AMOUNT_TRADE)
+                                    if (avg.avg_price > Utils.formatEther(p.buy.data.quantity))
+                                        if (avg.last_price > Utils.formatEther(p.buy.data.quantity)) {
+                                            const diff = Utils.comparePrice(Utils.formatEther(p.buy.data.quantity), avg.avg_price)
+                                            console.log(`[id:${p.order_id}] [avg:${avg.avg_price}] [${avg.last_date}m => last_price:${avg.last_price}] [actual_price:${Utils.formatEther(p.buy.data.quantity)}] ${p.sell.data.properties.name} (${diff?.sign}${diff?.value?.toFixed(1)}%)${diff.alert ? '⚠ ⚠ ⚠' : ''}`)
+                                            console.log(`${composeUrl(p)}\n`)
+                                            topBuy.push(p)
+                                        }
+                    }
                 }
-            }
             console.log(`top_buy: ${topBuy.length}`)
 
             //Filter && buy
@@ -108,10 +113,8 @@ function loop(client) {
                 if (await Utils.isAlreadyBought(client, t))
                     continue;
                 const diff = await Utils.getDiff(client, t)
+                if (vars.DEBUG) console.log(`MIN_CRESTA is :${Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity)).toFixed(7)}`);
                 if (diff > Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity))) {
-                    console.log(`MIN_CRESTA is :${Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity)).toFixed(6)}`);
-                    console.log(`DIFF is :${(parseFloat(diff) || 0).toFixed(6)}`);
-                    //hook.send(`log_some_sheets_about_trade_to_debug_overpriced_buy`)
                     toSell.push({
                         item: await Utils.doTrade(client, t, hook),
                         price: (t.buy.data.quantity.add(Utils.parseEther(diff.toString())).sub(Utils.parseEther(vars.X_VAL.toString())))

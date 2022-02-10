@@ -24,5 +24,8 @@ export const vars = {
     DEBUG: false, //ENABLE_DEBUG_LOG
     HB_RATE:300, //SEND_HEARTBEAT_EVERY_N_LOOP_ITERATION
     BOT_NAME:'digital_bot',
-    CHECK_BAL:false //check balance every loop then send msg
+    CHECK_BAL:false, //check balance every loop then send msg
+    DISABLE_TT:false, //DISABLE TT_CALL AVG LAST PRICE AMOUNT
+    MIN_PRICE:0.00003,
+    MIN_DIFF:0
 }
