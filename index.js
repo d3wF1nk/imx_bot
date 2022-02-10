@@ -59,7 +59,7 @@ function loop(client) {
                 cards?.instant?.forEach(i => {
                     order.forEach(o => {
                         if (i.id === Utils.getId(o) && Utils.formatEther(o.buy.data.quantity) <= i.eth) {
-                            const msg = `try to snipe ${i.name} at ${Utils.formatEther(o.buy.data.quantity)} ..`
+                            const msg = `[${vars.BOT_NAME}] try to snipe ${i.name} at ${Utils.formatEther(o.buy.data.quantity)} ..`
                             console.log(msg)
                             hook.send(msg)
                             Utils.doTrade(client, o, hook)
