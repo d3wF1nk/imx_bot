@@ -53,7 +53,7 @@ export const doTrade = async (client, order,hook) => {
                 type: ERC721TokenType.ERC721,
                 data: {
                     tokenId: order.sell.data.token_id,
-                    tokenAddress: order.sell.data.token_address,
+                    tokenAddress: env.GODS_TOKEN_ADDRESS,
                 },
             },
             tokenSell: {
@@ -89,7 +89,7 @@ export const doSell = async (client, asset, price) => {
             tokenSell: {
                 type: ERC721TokenType.ERC721,
                 data: {
-                    tokenAddress: asset.sell.data.token_address,
+                    tokenAddress: env.GODS_TOKEN_ADDRESS,
                     tokenId: asset.sell.data.token_id.toLowerCase(),
                 },
             },
