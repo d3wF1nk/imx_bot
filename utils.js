@@ -43,6 +43,7 @@ export const doConnect = async () => {
 
 export const doTrade = async (client, order,hook) => {
     let trade;
+    if(vars.DEBUG) console.time(`trade_${order.order_id}`)
     try {
         trade = await client.createTrade({
             user: client.address,
@@ -65,6 +66,7 @@ export const doTrade = async (client, order,hook) => {
         })
         const msg = `[${vars.BOT_NAME}] ${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`;
         console.log(msg)
+        if(vars.DEBUG) console.timeEnd(`trade_${order.order_id}`)
         hook.send(msg)
 
     } catch (err) {
@@ -134,6 +136,7 @@ export const isAlreadyBought = async (client, item) => {
 }
 
 export const getOrders = async (client) => {
+    if(vars.DEBUG) console.time(`get_orders`)
     let orders = [];
     let result_set = await client.getOrders({
         order_by: 'timestamp',
@@ -143,6 +146,7 @@ export const getOrders = async (client) => {
         sell_token_type: ERC721TokenType.ERC721,
         buy_token_type: ETHTokenType.ETH
     });
+    if(vars.DEBUG) console.timeEnd(`get_orders`)
     orders = orders.concat(result_set.result);
     return orders;
 }
