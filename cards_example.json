@@ -3,7 +3,7 @@
     {
       "name": "Demogorgon",
       "id": "94",
-      "eth": 0.2
+      "eth": 0.001
     }
   ],
   "black": [
@@ -12,8 +12,1684 @@
       "id": "1204"
     },
     {
+      "name": "Echoing Fury",
+      "id": "1479"
+    },
+    {
+      "name": "Veteran Hoplite",
+      "id": "873"
+    },
+    {
+      "name": "Ominous Burrow",
+      "id": "1466"
+    },
+    {
+      "name": "Enraging Talisman",
+      "id": "1488"
+    },
+    {
+      "name": "Golden Curse",
+      "id": "1453"
+    },
+    {
+      "name": "Helm Hustler",
+      "id": "1454"
+    },
+    {
+      "name": "Miasmic Forge",
+      "id": "1376"
+    },
+    {
+      "name": "Scholar of Power",
+      "id": "1383"
+    },
+    {
+      "name": "Snapping Turtle",
+      "id": "1456"
+    },
+    {
+      "name": "Deathwatch Elder",
+      "id": "1362"
+    },
+    {
+      "name": "Dead Sentry",
+      "id": "1402"
+    },
+    {
+      "name": "The Rotted One",
+      "id": "1370"
+    },
+    {
+      "name": "Anubian Redeemer",
+      "id": "1433"
+    },
+    {
+      "name": "Armadillo Familiar",
+      "id": "1380"
+    },
+    {
+      "name": "Bar Fight",
+      "id": "1323"
+    },
+    {
+      "name": "Barbed Fly",
+      "id": "1368"
+    },
+    {
+      "name": "Beam Sentry",
+      "id": "1414"
+    },
+    {
+      "name": "Blood and Bone",
+      "id": "1467"
+    },
+    {
       "name": "Blood Armor",
       "id": "1359"
+    },
+    {
+      "name": "Enchanted Chariot",
+      "id": "1394"
+    },
+    {
+      "name": "Demolitions Expert",
+      "id": "1445"
+    },
+    {
+      "name": "Desecrated Shrine",
+      "id": "1377"
+    },
+    {
+      "name": "Exalted Hermit",
+      "id": "1417"
+    },
+    {
+      "name": "Excommunicate",
+      "id": "1421"
+    },
+    {
+      "name": "Frostbitten Channeler",
+      "id": "1355"
+    },
+    {
+      "name": "Generous Aid",
+      "id": "1428"
+    },
+    {
+      "name": "Ghost Form",
+      "id": "1353"
+    },
+    {
+      "name": "Gorgon Gargoyle",
+      "id": "1331"
+    },
+    {
+      "name": "Grand Vault",
+      "id": "1437"
+    },
+    {
+      "name": "Grumpy Chest",
+      "id": "1396"
+    },
+    {
+      "name": "Handsome Devil",
+      "id": "1440"
+    },
+    {
+      "name": "Harrowing Visions",
+      "id": "1369"
+    },
+    {
+      "name": "Hearts of Bronze",
+      "id": "1474"
+    },
+    {
+      "name": "Illustrious Planetar",
+      "id": "1419"
+    },
+    {
+      "name": "Inconspicuous Bush",
+      "id": "1330"
+    },
+    {
+      "name": "Inexorable Raider",
+      "id": "1363"
+    },
+    {
+      "name": "Inquisitor Informant",
+      "id": "1340"
+    },
+    {
+      "name": "Larcenous Imp",
+      "id": "1411"
+    },
+    {
+      "name": "Looting Squire",
+      "id": "1475"
+    },
+    {
+      "name": "Magnetic Blast",
+      "id": "1379"
+    },
+    {
+      "name": "Mark of Death",
+      "id": "1361"
+    },
+    {
+      "name": "Modified Schematic",
+      "id": "1354"
+    },
+    {
+      "name": "Moonbeam",
+      "id": "1314"
+    },
+    {
+      "name": "Mutual Hatred",
+      "id": "1375"
+    },
+    {
+      "name": "New Growth",
+      "id": "1461"
+    },
+    {
+      "name": "Outnumber the Living",
+      "id": "1305"
+    },
+    {
+      "name": "Pan Forgemaster",
+      "id": "1360"
+    },
+    {
+      "name": "Phalanx Lieutenant",
+      "id": "1399"
+    },
+    {
+      "name": "Pray to Win",
+      "id": "1442"
+    },
+    {
+      "name": "Rage-Filled Hammer",
+      "id": "1327"
+    },
+    {
+      "name": "Righteous Apparition",
+      "id": "1341"
+    },
+    {
+      "name": "Shielded by Light",
+      "id": "1418"
+    },
+    {
+      "name": "Skeletal Hoplite",
+      "id": "1397"
+    },
+    {
+      "name": "Sound the Charge",
+      "id": "1490"
+    },
+    {
+      "name": "Spoils of War",
+      "id": "1325"
+    },
+    {
+      "name": "Spring's Harvest",
+      "id": "1315"
+    },
+    {
+      "name": "Strix Conscript",
+      "id": "1400"
+    },
+    {
+      "name": "Tempest Giant",
+      "id": "1409"
+    },
+    {
+      "name": "Thebian Elephant",
+      "id": "1407"
+    },
+    {
+      "name": "Unproven Incantation",
+      "id": "1381"
+    },
+    {
+      "name": "Valknir Cavalry",
+      "id": "1476"
+    },
+    {
+      "name": "Venerable Paladin",
+      "id": "1416"
+    },
+    {
+      "name": "Patient Pickpocket",
+      "id": "1338"
+    },
+    {
+      "name": "Planetar Acolyte",
+      "id": "1401"
+    },
+    {
+      "name": "Feral Cat",
+      "id": "1311"
+    },
+    {
+      "name": "Cobra Scepter",
+      "id": "1337"
+    },
+    {
+      "name": "Amazon Spellcatcher",
+      "id": "1405"
+    },
+    {
+      "name": "Censure",
+      "id": "1344"
+    },
+    {
+      "name": "Aspect of the Pangolin",
+      "id": "1457"
+    },
+    {
+      "name": "Nokkvi Warrior",
+      "id": "1320"
+    },
+    {
+      "name": "Patient Pickpocket",
+      "id": "1338"
+    },
+    {
+      "name": "Piercing Bolt",
+      "id": "1438"
+    },
+    {
+      "name": "Ravenous Chimera",
+      "id": "1481"
+    },
+    {
+      "name": "Sip from the Spring",
+      "id": "1313"
+    },
+    {
+      "name": "Voracious Fiend",
+      "id": "1374"
+    },
+    {
+      "name": "Watchful Hound",
+      "id": "1339"
+    },
+    {
+      "name": "Changing Locks",
+      "id": "1332"
+    },
+    {
+      "name": "Crescent Werewolf",
+      "id": "1459"
+    },
+    {
+      "name": "Inspiring Skald",
+      "id": "1322"
+    },
+    {
+      "name": "Lightning Talisman",
+      "id": "1387"
+    },
+    {
+      "name": "Mass Raise",
+      "id": "1303"
+    },
+    {
+      "name": "Overseer of Vitality",
+      "id": "1364"
+    },
+    {
+      "name": "Protective Benediction",
+      "id": "1434"
+    },
+    {
+      "name": "Pull the Strings",
+      "id": "1365"
+    },
+    {
+      "name": "Safeguard Incantation",
+      "id": "1352"
+    },
+    {
+      "name": "The Plague",
+      "id": "1306"
+    },
+    {
+      "name": "Volcanic Watcher",
+      "id": "1393"
+    },
+    {
+      "name": "Writ of Law",
+      "id": "1346"
+    },
+    {
+      "name": "Zealous Ecclesiast",
+      "id": "1420"
+    },
+    {
+      "name": "Blazing Behemoth",
+      "id": "1403"
+    },
+    {
+      "name": "Chieftain of Impulse",
+      "id": "1482"
+    },
+    {
+      "name": "Cursed Hoplite",
+      "id": "1358"
+    },
+    {
+      "name": "Divine Archon",
+      "id": "1404"
+    },
+    {
+      "name": "Divine Chains",
+      "id": "1427"
+    },
+    {
+      "name": "Enraging Talisman",
+      "id": "1488"
+    },
+    {
+      "name": "Glaring Talisman",
+      "id": "1429"
+    },
+    {
+      "name": "Lips Are Sealed",
+      "id": "1342"
+    },
+    {
+      "name": "Mentor of Salvation",
+      "id": "1422"
+    },
+    {
+      "name": "Ogre Warlock",
+      "id": "1408"
+    },
+    {
+      "name": "Pillar of Lightning",
+      "id": "1348"
+    },
+    {
+      "name": "Plague Talisman",
+      "id": "1373"
+    },
+    {
+      "name": "Plate Pilferer",
+      "id": "1439"
+    },
+    {
+      "name": "Professor of Murder",
+      "id": "1443"
+    },
+    {
+      "name": "Sage of Renewal",
+      "id": "1465"
+    },
+    {
+      "name": "Scholar of Power",
+      "id": "1383"
+    },
+    {
+      "name": "Smith's Hammer",
+      "id": "1477"
+    },
+    {
+      "name": "Tartessian Minotaur",
+      "id": "1493"
+    },
+    {
+      "name": "Twisting Talisman",
+      "id": "1452"
+    },
+    {
+      "name": "Blazing Talisman",
+      "id": "1473"
+    },
+    {
+      "name": "Caged Berserker",
+      "id": "1328"
+    },
+    {
+      "name": "Guardian Simulacrum",
+      "id": "1378"
+    },
+    {
+      "name": "Raging Giant",
+      "id": "1469"
+    },
+    {
+      "name": "Revered Seer",
+      "id": "1321"
+    },
+    {
+      "name": "Shadow Matriarch",
+      "id": "1450"
+    },
+    {
+      "name": "Snapping Turtle",
+      "id": "1456"
+    },
+    {
+      "name": "Surprise Delivery",
+      "id": "1334"
+    },
+    {
+      "name": "City Planner",
+      "id": "1367"
+    },
+    {
+      "name": "Deathwatch Elder",
+      "id": "1362"
+    },
+    {
+      "name": "Covetous Cutthroat",
+      "id": "1410"
+    },
+    {
+      "name": "Helm Hustler",
+      "id": "1454"
+    },
+    {
+      "name": "Miasmic Forge",
+      "id": "1376"
+    },
+    {
+      "name": "Rolling Thunder",
+      "id": "1491"
+    },
+    {
+      "name": "Animated Armory",
+      "id": "1431"
+    },
+    {
+      "name": "Golden Curse",
+      "id": "1453"
+    },
+    {
+      "name": "Stormfield",
+      "id": "1351"
+    },
+    {
+      "name": "Ring of the Siren",
+      "id": "1447"
+    },
+    {
+      "name": "Snowstorm Spire",
+      "id": "1357"
+    },
+    {
+      "name": "Tenderizer",
+      "id": "1478"
+    },
+    {
+      "name": "Golden-Winged Sphinx",
+      "id": "1430"
+    },
+    {
+      "name": "Cambion Runelord",
+      "id": "148"
+    },
+    {
+      "name": "Pyroclastic Alchemist",
+      "id": "320"
+    },
+    {
+      "name": "Aetherfuel Alchemist",
+      "id": "244"
+    },
+    {
+      "name": "Actuary of War",
+      "id": "192"
+    },
+    {
+      "name": "Advocate of Brilliance",
+      "id": "242"
+    },
+    {
+      "name": "Ancient Curse",
+      "id": "6"
+    },
+    {
+      "name": "Ambush",
+      "id": "290"
+    },
+    {
+      "name": "Apate Conspirator",
+      "id": "28"
+    },
+    {
+      "name": "Catacomb Curator",
+      "id": "10"
+    },
+    {
+      "name": "Fill the Coffers",
+      "id": "338"
+    },
+    {
+      "name": "Azure Djinni",
+      "id": "164"
+    },
+    {
+      "name": "Gunpowder Plot",
+      "id": "292"
+    },
+    {
+      "name": "Unruly Shredder",
+      "id": "232"
+    },
+    {
+      "name": "Mirror, Mirror",
+      "id": "154"
+    },
+    {
+      "name": "Underhand Thug",
+      "id": "141"
+    },
+    {
+      "name": "Dense Fog",
+      "id": "176"
+    },
+    {
+      "name": "Mana Thief",
+      "id": "130"
+    },
+    {
+      "name": "Bucking Bronco",
+      "id": "359"
+    },
+    {
+      "name": "Eternal Servant",
+      "id": "8"
+    },
+    {
+      "name": "Spellstealer",
+      "id": "344"
+    },
+    {
+      "name": "Annoying Combatant",
+      "id": "78"
+    },
+    {
+      "name": "Synergy Golem",
+      "id": "90"
+    },
+    {
+      "name": "Jungle Shepherd",
+      "id": "356"
+    },
+    {
+      "name": "Raiding Kraken",
+      "id": "305"
+    },
+    {
+      "name": "Arrest Warrant",
+      "id": "39"
+    },
+    {
+      "name": "Blind Cyclops",
+      "id": "170"
+    },
+    {
+      "name": "Specialist Force",
+      "id": "371"
+    },
+    {
+      "name": "Fallen Aether",
+      "id": "210"
+    },
+    {
+      "name": "Balance Ethereals",
+      "id": "66"
+    },
+    {
+      "name": "Felid Tracker",
+      "id": "45"
+    },
+    {
+      "name": "Bast's Claws",
+      "id": "222"
+    },
+    {
+      "name": "Wrath Zealot",
+      "id": "137"
+    },
+    {
+      "name": "Exoscout",
+      "id": "177"
+    },
+    {
+      "name": "Iron Kopis",
+      "id": "189"
+    },
+    {
+      "name": "Ignean Roulette",
+      "id": "48"
+    },
+    {
+      "name": "Leywraith",
+      "id": "243"
+    },
+    {
+      "name": "Aquatic Torturer",
+      "id": "185"
+    },
+    {
+      "name": "Dead Man's Flail",
+      "id": "297"
+    },
+    {
+      "name": "Stun Gun Construct",
+      "id": "236"
+    },
+    {
+      "name": "Lupine Elemental",
+      "id": "89"
+    },
+    {
+      "name": "Rift Scholar",
+      "id": "112"
+    },
+    {
+      "name": "Pocket Channeler",
+      "id": "41"
+    },
+    {
+      "name": "Quicksilver Dragon",
+      "id": "184"
+    },
+    {
+      "name": "The Cleansing",
+      "id": "287"
+    },
+    {
+      "name": "Devout Cleric",
+      "id": "326"
+    },
+    {
+      "name": "Nethergram",
+      "id": "1"
+    },
+    {
+      "name": "Demoralise",
+      "id": "309"
+    },
+    {
+      "name": "Hall of Mirrors",
+      "id": "93"
+    },
+    {
+      "name": "Arcana-Daemon",
+      "id": "352"
+    },
+    {
+      "name": "Arms Trafficker",
+      "id": "311"
+    },
+    {
+      "name": "Enduring Lemure",
+      "id": "204"
+    },
+    {
+      "name": "Blade Trial Valkyrie",
+      "id": "173"
+    },
+    {
+      "name": "Millenium Matryoshka",
+      "id": "215"
+    },
+    {
+      "name": "Outcast Amazon",
+      "id": "238"
+    },
+    {
+      "name": "Ares' Eruption",
+      "id": "190"
+    },
+    {
+      "name": "Cyclops",
+      "id": "195"
+    },
+    {
+      "name": "Golem Excavator",
+      "id": "73"
+    },
+    {
+      "name": "Scarab Swarm",
+      "id": "54"
+    },
+    {
+      "name": "Sign of Avarice",
+      "id": "353"
+    },
+    {
+      "name": "Radiant Guardian",
+      "id": "30"
+    },
+    {
+      "name": "Sphinx Cat",
+      "id": "268"
+    },
+    {
+      "name": "Beyond the Grave",
+      "id": "350"
+    },
+    {
+      "name": "Warden of Kauket",
+      "id": "259"
+    },
+    {
+      "name": "Red Fume Dash",
+      "id": "281"
+    },
+    {
+      "name": "Pilgrim of the Cause",
+      "id": "105"
+    },
+    {
+      "name": "Salvaged Sentinel",
+      "id": "312"
+    },
+    {
+      "name": "Sonic Juggernaut",
+      "id": "233"
+    },
+    {
+      "name": "Jungle Scout",
+      "id": "270"
+    },
+    {
+      "name": "Furies",
+      "id": "157"
+    },
+    {
+      "name": "Mercenary Daemon",
+      "id": "163"
+    },
+    {
+      "name": "Nether Nanny",
+      "id": "9"
+    },
+    {
+      "name": "Labyrinth Minotaur",
+      "id": "329"
+    },
+    {
+      "name": "Cavern Arachne",
+      "id": "294"
+    },
+    {
+      "name": "Omnipresence",
+      "id": "277"
+    },
+    {
+      "name": "Read The Leaves",
+      "id": "86"
+    },
+    {
+      "name": "Three's a Crowd",
+      "id": "250"
+    },
+    {
+      "name": "Leyline Djinn",
+      "id": "183"
+    },
+    {
+      "name": "Dragon Tooth Warrior",
+      "id": "247"
+    },
+    {
+      "name": "Enraged Ally",
+      "id": "77"
+    },
+    {
+      "name": "Fusing Fleshspawn",
+      "id": "124"
+    },
+    {
+      "name": "Paragon of Fortune",
+      "id": "209"
+    },
+    {
+      "name": "Rune Smuggler",
+      "id": "282"
+    },
+    {
+      "name": "Bulwark of the Sky",
+      "id": "159"
+    },
+    {
+      "name": "Ruins Explorer",
+      "id": "40"
+    },
+    {
+      "name": "Smoke Bomb",
+      "id": "330"
+    },
+    {
+      "name": "Trapdoor Assassin",
+      "id": "179"
+    },
+    {
+      "name": "Identity Thief",
+      "id": "331"
+    },
+    {
+      "name": "Laertes' Vendetta",
+      "id": "280"
+    },
+    {
+      "name": "O Fortuna",
+      "id": "373"
+    },
+    {
+      "name": "Engaged Enchanter",
+      "id": "313"
+    },
+    {
+      "name": "Forty Days",
+      "id": "321"
+    },
+    {
+      "name": "Lore & Order Inspector",
+      "id": "293"
+    },
+    {
+      "name": "Reinforcements",
+      "id": "110"
+    },
+    {
+      "name": "Lightdaemon King",
+      "id": "318"
+    },
+    {
+      "name": "Crush Construct",
+      "id": "274"
+    },
+    {
+      "name": "Devouring Golem",
+      "id": "116"
+    },
+    {
+      "name": "Spellwrought Angel",
+      "id": "32"
+    },
+    {
+      "name": "Erratic Summons",
+      "id": "107"
+    },
+    {
+      "name": "Dwarven Smiths",
+      "id": "156"
+    },
+    {
+      "name": "Tithe Collector",
+      "id": "223"
+    },
+    {
+      "name": "Petard",
+      "id": "68"
+    },
+    {
+      "name": "Unnatural Binding",
+      "id": "44"
+    },
+    {
+      "name": "Rampaging Leviathan",
+      "id": "273"
+    },
+    {
+      "name": "Farsight Explorer",
+      "id": "52"
+    },
+    {
+      "name": "Wizened Warlock",
+      "id": "158"
+    },
+    {
+      "name": "Bearstrider",
+      "id": "275"
+    },
+    {
+      "name": "Gleeful Pillager",
+      "id": "85"
+    },
+    {
+      "name": "Guerilla Sabotage",
+      "id": "300"
+    },
+    {
+      "name": "Spelljam Shaman",
+      "id": "240"
+    },
+    {
+      "name": "Hurl Weapon",
+      "id": "38"
+    },
+    {
+      "name": "Equivalent Exchange",
+      "id": "310"
+    },
+    {
+      "name": "Pickpocket",
+      "id": "65"
+    },
+    {
+      "name": "Tomb Robber",
+      "id": "122"
+    },
+    {
+      "name": "Wasteful Shax",
+      "id": "253"
+    },
+    {
+      "name": "Deathdealt Netherine",
+      "id": "62"
+    },
+    {
+      "name": "Death Masque",
+      "id": "140"
+    },
+    {
+      "name": "Faustian Pact",
+      "id": "16"
+    },
+    {
+      "name": "Blacksmith Armourer",
+      "id": "299"
+    },
+    {
+      "name": "Carcass Vulture",
+      "id": "108"
+    },
+    {
+      "name": "Ocular Fiend",
+      "id": "224"
+    },
+    {
+      "name": "Grass Roots",
+      "id": "217"
+    },
+    {
+      "name": "Scales of Justice",
+      "id": "346"
+    },
+    {
+      "name": "Ra's Ascension",
+      "id": "288"
+    },
+    {
+      "name": "Kidnapper",
+      "id": "336"
+    },
+    {
+      "name": "Alms For Service",
+      "id": "289"
+    },
+    {
+      "name": "Contagious Ghoul",
+      "id": "205"
+    },
+    {
+      "name": "Empire's Footman",
+      "id": "228"
+    },
+    {
+      "name": "Chainflip",
+      "id": "142"
+    },
+    {
+      "name": "Balance Summoner",
+      "id": "186"
+    },
+    {
+      "name": "Druidic Summons",
+      "id": "301"
+    },
+    {
+      "name": "Jackal",
+      "id": "377"
+    },
+    {
+      "name": "Runaway Trebuchet",
+      "id": "298"
+    },
+    {
+      "name": "Simple Satyr",
+      "id": "43"
+    },
+    {
+      "name": "Mindful Orc",
+      "id": "325"
+    },
+    {
+      "name": "Respected Jarl",
+      "id": "15"
+    },
+    {
+      "name": "Raving Fan",
+      "id": "194"
+    },
+    {
+      "name": "Vine Armour",
+      "id": "174"
+    },
+    {
+      "name": "The Black Argo",
+      "id": "49"
+    },
+    {
+      "name": "Planetar Envoy",
+      "id": "180"
+    },
+    {
+      "name": "Inquisitor's Summons",
+      "id": "317"
+    },
+    {
+      "name": "Overclock",
+      "id": "80"
+    },
+    {
+      "name": "Malfunctioning Servitor",
+      "id": "69"
+    },
+    {
+      "name": "Dread Pirate",
+      "id": "42"
+    },
+    {
+      "name": "Endow Wings",
+      "id": "175"
+    },
+    {
+      "name": "Heads or Tails",
+      "id": "332"
+    },
+    {
+      "name": "Hyksosian Chariot",
+      "id": "258"
+    },
+    {
+      "name": "Wilds Lifebonder",
+      "id": "278"
+    },
+    {
+      "name": "Incoming Raid",
+      "id": "165"
+    },
+    {
+      "name": "Nephthys Guardian",
+      "id": "150"
+    },
+    {
+      "name": "Pharaoh's Body-Double",
+      "id": "56"
+    },
+    {
+      "name": "Prodigious Armourer",
+      "id": "213"
+    },
+    {
+      "name": "Loam Naturalist",
+      "id": "361"
+    },
+    {
+      "name": "Runestorm",
+      "id": "117"
+    },
+    {
+      "name": "Ruthless Caipora",
+      "id": "216"
+    },
+    {
+      "name": "Sentinel Princess",
+      "id": "33"
+    },
+    {
+      "name": "Field Martyr",
+      "id": "237"
+    },
+    {
+      "name": "Reborn Pharaoh",
+      "id": "335"
+    },
+    {
+      "name": "Backstreet Bouncer",
+      "id": "374"
+    },
+    {
+      "name": "Shrine of Sothek",
+      "id": "214"
+    },
+    {
+      "name": "Aegis Commander",
+      "id": "109"
+    },
+    {
+      "name": "Thresher Bug",
+      "id": "208"
+    },
+    {
+      "name": "Servant of Inti",
+      "id": "241"
+    },
+    {
+      "name": "Magic Inks",
+      "id": "91"
+    },
+    {
+      "name": "Soul Jar",
+      "id": "111"
+    },
+    {
+      "name": "Eager Gryphon",
+      "id": "355"
+    },
+    {
+      "name": "Fertility Idol",
+      "id": "135"
+    },
+    {
+      "name": "Merchant Prince",
+      "id": "341"
+    },
+    {
+      "name": "Holy Writ",
+      "id": "322"
+    },
+    {
+      "name": "Jaguar Rider",
+      "id": "375"
+    },
+    {
+      "name": "Well of Power",
+      "id": "316"
+    },
+    {
+      "name": "Wild Spellsinger",
+      "id": "172"
+    },
+    {
+      "name": "Hypnos Puzzle Box",
+      "id": "283"
+    },
+    {
+      "name": "Hollow Pillager",
+      "id": "227"
+    },
+    {
+      "name": "Enflame Self",
+      "id": "125"
+    },
+    {
+      "name": "Venerable Gryphon",
+      "id": "272"
+    },
+    {
+      "name": "Angelic Veteran",
+      "id": "328"
+    },
+    {
+      "name": "Crystallax",
+      "id": "372"
+    },
+    {
+      "name": "False Peace",
+      "id": "265"
+    },
+    {
+      "name": "Roadside Outfitter",
+      "id": "191"
+    },
+    {
+      "name": "Charm",
+      "id": "13"
+    },
+    {
+      "name": "Take Them All On",
+      "id": "308"
+    },
+    {
+      "name": "Bonepact Hunter",
+      "id": "239"
+    },
+    {
+      "name": "Rebel Quartermaster",
+      "id": "286"
+    },
+    {
+      "name": "High Thaumaturge",
+      "id": "182"
+    },
+    {
+      "name": "Faraday Cage",
+      "id": "291"
+    },
+    {
+      "name": "Returned Einherjar",
+      "id": "197"
+    },
+    {
+      "name": "Mountain Greatwyrm",
+      "id": "19"
+    },
+    {
+      "name": "Corrupt Ceremony",
+      "id": "127"
+    },
+    {
+      "name": "Ares Peacemaker",
+      "id": "203"
+    },
+    {
+      "name": "Natural Selection",
+      "id": "36"
+    },
+    {
+      "name": "Ares' Runeblade",
+      "id": "1142"
+    },
+    {
+      "name": "Pack Stalk",
+      "id": "1256"
+    },
+    {
+      "name": "Aging Veteran",
+      "id": "1192"
+    },
+    {
+      "name": "Harp Cupid",
+      "id": "1213"
+    },
+    {
+      "name": "Arkmonian Anteater",
+      "id": "1081"
+    },
+    {
+      "name": "Beastfury Shaman",
+      "id": "1232"
+    },
+    {
+      "name": "Bombfly",
+      "id": "1029"
+    },
+    {
+      "name": "Reckoning",
+      "id": "1137"
+    },
+    {
+      "name": "Antimagic Wards",
+      "id": "1019"
+    },
+    {
+      "name": "Anti-Magic Expert",
+      "id": "1121"
+    },
+    {
+      "name": "Burnished Bull",
+      "id": "1087"
+    },
+    {
+      "name": "Illuminated Warrior",
+      "id": "1062"
+    },
+    {
+      "name": "Tomb Torchbearer",
+      "id": "1164"
+    },
+    {
+      "name": "Blackguard",
+      "id": "1091"
+    },
+    {
+      "name": "Atlant Phalanx",
+      "id": "1067"
+    },
+    {
+      "name": "Ghost Marauder",
+      "id": "1215"
+    },
+    {
+      "name": "Auric Mage",
+      "id": "1102"
+    },
+    {
+      "name": "Avalanche Strike",
+      "id": "1002"
+    },
+    {
+      "name": "Combat Medic",
+      "id": "1181"
+    },
+    {
+      "name": "Cyclops Defender",
+      "id": "1088"
+    },
+    {
+      "name": "Cyclops Marksman",
+      "id": "1106"
+    },
+    {
+      "name": "Sentient Amphora",
+      "id": "1079"
+    },
+    {
+      "name": "Darkdream Hex",
+      "id": "1007"
+    },
+    {
+      "name": "Belligerent Warlock",
+      "id": "1189"
+    },
+    {
+      "name": "Double Dealer",
+      "id": "1171"
+    },
+    {
+      "name": "Thalia, Charite Temptress",
+      "id": "1025"
+    },
+    {
+      "name": "Zaxiom, Cryptic Panther",
+      "id": "1163"
+    },
+    {
+      "name": "Judge Envoy",
+      "id": "1146"
+    },
+    {
+      "name": "Duergar Priest",
+      "id": "1096"
+    },
+    {
+      "name": "Felid Assassin",
+      "id": "1194"
+    },
+    {
+      "name": "Frost Giant Deadshot",
+      "id": "1111"
+    },
+    {
+      "name": "Staff of Shards",
+      "id": "1015"
+    },
+    {
+      "name": "Pyrrhic Hatchling",
+      "id": "1074"
+    },
+    {
+      "name": "Balthazar, Blood Magus",
+      "id": "1080"
+    },
+    {
+      "name": "Annoying Bureaucrat",
+      "id": "1183"
+    },
+    {
+      "name": "Helian Blademaster",
+      "id": "1113"
+    },
+    {
+      "name": "Leyhoard Hatchling",
+      "id": "1036"
+    },
+    {
+      "name": "Sentry Post",
+      "id": "1198"
+    },
+    {
+      "name": "Ladon, Uclid Dragon",
+      "id": "1108"
+    },
+    {
+      "name": "Porphyrion, Dread Cyclops",
+      "id": "1109"
+    },
+    {
+      "name": "Helios Battlesworn",
+      "id": "1068"
+    },
+    {
+      "name": "Helios Guardian",
+      "id": "1056"
+    },
+    {
+      "name": "Made Mark",
+      "id": "1125"
+    },
+    {
+      "name": "Mammon's Stalwart",
+      "id": "1208"
+    },
+    {
+      "name": "Netherwarp",
+      "id": "1009"
+    },
+    {
+      "name": "Arrow of Rage",
+      "id": "1143"
+    },
+    {
+      "name": "Eldritch Demonologist",
+      "id": "1070"
+    },
+    {
+      "name": "Tomb Blademaster",
+      "id": "1184"
+    },
+    {
+      "name": "Void Drake",
+      "id": "1066"
+    },
+    {
+      "name": "Lokian Disciple",
+      "id": "1026"
+    },
+    {
+      "name": "The Nemean Lion",
+      "id": "1145"
+    },
+    {
+      "name": "Cerberus, Styx Hound",
+      "id": "1033"
+    },
+    {
+      "name": "Devouring Blade",
+      "id": "1053"
+    },
+    {
+      "name": "Metamorphosis",
+      "id": "1240"
+    },
+    {
+      "name": "Ballista",
+      "id": "1204"
+    },
+    {
+      "name": "Cursed Caipora",
+      "id": "1200"
+    },
+    {
+      "name": "Ogre Archer",
+      "id": "1151"
+    },
+    {
+      "name": "Hardened Channeler",
+      "id": "1177"
+    },
+    {
+      "name": "Patron's Sacrament",
+      "id": "1124"
+    },
+    {
+      "name": "Phylactery",
+      "id": "1159"
+    },
+    {
+      "name": "Infernal Footsoldier",
+      "id": "1165"
+    },
+    {
+      "name": "Dionysian Drunk",
+      "id": "1207"
+    },
+    {
+      "name": "Revivification",
+      "id": "1017"
+    },
+    {
+      "name": "Spartan",
+      "id": "1150"
+    },
+    {
+      "name": "Shieldbearer",
+      "id": "1097"
+    },
+    {
+      "name": "Tomb Priest",
+      "id": "1103"
+    },
+    {
+      "name": "Amazon Conscript",
+      "id": "1161"
+    },
+    {
+      "name": "Ambitious Adventurer",
+      "id": "1220"
+    },
+    {
+      "name": "Born Again",
+      "id": "1234"
+    },
+    {
+      "name": "Pyrrhic Adolescent",
+      "id": "1071"
+    },
+    {
+      "name": "Staff of Roots",
+      "id": "1044"
+    },
+    {
+      "name": "Thaeric Blessing",
+      "id": "1188"
+    },
+    {
+      "name": "Runed Asp",
+      "id": "1154"
+    },
+    {
+      "name": "Viking Bloodguard",
+      "id": "1140"
+    },
+    {
+      "name": "Catapult",
+      "id": "1104"
+    },
+    {
+      "name": "Aether Battlescout",
+      "id": "1072"
+    },
+    {
+      "name": "Writhing Spirit",
+      "id": "1032"
+    },
+    {
+      "name": "Astric Implosion",
+      "id": "1011"
+    },
+    {
+      "name": "Dune Cavalry",
+      "id": "1095"
+    },
+    {
+      "name": "Battlebard",
+      "id": "1076"
+    },
+    {
+      "name": "Eager Nobleborn",
+      "id": "1218"
+    },
+    {
+      "name": "Thaumnetic Golem",
+      "id": "1242"
+    },
+    {
+      "name": "Inconspicuous Carriage",
+      "id": "1230"
+    },
+    {
+      "name": "Prescient Spellbinder",
+      "id": "1251"
+    },
+    {
+      "name": "Shadow Paladin",
+      "id": "1228"
+    },
+    {
+      "name": "Inspirator",
+      "id": "1156"
+    },
+    {
+      "name": "Tartessian Skirmisher",
+      "id": "1170"
+    },
+    {
+      "name": "Slip Blade",
+      "id": "1027"
+    },
+    {
+      "name": "Traveling Bard",
+      "id": "1172"
+    },
+    {
+      "name": "Vanir Lion",
+      "id": "1092"
+    },
+    {
+      "name": "Opalised Roots",
+      "id": "1004"
+    },
+    {
+      "name": "Arkmonian Onslaught",
+      "id": "1003"
+    },
+    {
+      "name": "Battle Aurochs",
+      "id": "1148"
+    },
+    {
+      "name": "Dwarf Atlant",
+      "id": "1073"
+    },
+    {
+      "name": "Famished Ghoul",
+      "id": "1028"
+    },
+    {
+      "name": "Mire Bloodworm",
+      "id": "1211"
+    },
+    {
+      "name": "Vinebound Jotun",
+      "id": "1047"
+    },
+    {
+      "name": "Felid Janissary",
+      "id": "1147"
+    },
+    {
+      "name": "Fleshbind",
+      "id": "1225"
+    },
+    {
+      "name": "Highland Defender",
+      "id": "1203"
+    },
+    {
+      "name": "Jungle Princess",
+      "id": "1167"
     }
   ]
 }
