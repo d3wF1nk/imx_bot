@@ -3,6 +3,7 @@ export const env = {
     IMXURL: 'https://api.x.immutable.com/v1',
     STARK: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
     REGISTRATION: '0x72a06bf2a1CE5e39cBA06c0CAb824960B587d64c',
+    GODS_TOKEN_ADDRESS:'0xacb3c6a43d15b907e8433077b6d38ae40936fe2c',
 
     NETWORK: 'mainnet',
     API_KEY_INFURA: '',
