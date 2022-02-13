@@ -32,8 +32,8 @@ function loop(client) {
                 if (vars.CHECK_BAL) hook?.send(`[${vars.BOT_NAME}] ${bal_diff.sign}${bal_diff?.value?.toFixed(1)}%`).then(() => console.log('msg_sent'))
 
             //Getting the latest items
-            let order = await Utils.getOrders(client);
-            console.log(`\ntot_order: ${order.length}`)
+            let orders = await Utils.getOrders(client);
+            console.log(`\ntot_order: ${orders.length}`)
 
             //Get cards lists
             /**
@@ -56,27 +56,27 @@ function loop(client) {
 
             //Check for instant buy:
             if (cards?.instant?.length > 0)
-                cards?.instant?.forEach(i => {
-                    order.forEach(o => {
-                        if (i.id === Utils.getId(o) && Utils.formatEther(o.buy.data.quantity) <= i.eth) {
-                            const msg = `[${vars.BOT_NAME}] try to snipe ${i.name} at ${Utils.formatEther(o.buy.data.quantity)} ..`
+                for (const card of cards.instant) {
+                    for (const order of orders) {
+                        if (card.id === Utils.getId(order) && Utils.formatEther(order.buy.data.quantity) <= card.eth) {
+                            const msg = `[${vars.BOT_NAME}] try to snipe ${card.name} at ${Utils.formatEther(order.buy.data.quantity)} ..`
                             console.log(msg)
-                            hook.send(msg)
-                            Utils.doTrade(client, o, hook)
+                            hook.send(msg).then()
+                            await Utils.doTrade(client, order, hook)
                         }
-                    })
-                })
+                    }
+                }
 
             //Black || White
             if (cards?.white?.length > 0)
-                order = order.filter(o => cards?.white?.filter(b => b.id === Utils.getId(o)).length > 0)
+                orders = orders.filter(o => cards?.white?.filter(b => b.id === Utils.getId(o)).length > 0)
             else if (cards?.black?.length > 0)
-                order = order.filter(o => cards?.black?.filter(b => b.id === Utils.getId(o)).length === 0)
-            console.log(`filtered_card: ${order.length}`)
+                orders = orders.filter(o => cards?.black?.filter(b => b.id === Utils.getId(o)).length === 0)
+            console.log(`filtered_card: ${orders.length}`)
 
             //Potential buy
             let potBuy = [];
-            order.forEach(o => {
+            orders.forEach(o => {
                 if (o?.buy?.data?.quantity?.lt(balance?.imx?.div(vars.N_DIV))) {
                     if (o?.buy?.data?.quantity?.gte(parseEther(vars.MIN_PRICE?.toString())))
                         potBuy.push(o);
