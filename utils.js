@@ -113,8 +113,9 @@ export const doSell = async (client, asset, price) => {
             params.tokenBuy = {
                 type: ERC20TokenType.ERC20,
                 data: {
+                    symbol:currency.GODS,
                     decimals: 18,
-                    token_address:env.GODS_CURRENCY_TOKEN_ADDRESS
+                    tokenAddress:env.GODS_CURRENCY_TOKEN_ADDRESS
                 }
             };
             break;
