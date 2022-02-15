@@ -1,8 +1,8 @@
 import {ethers, providers} from "ethers";
-import {ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
+import {ERC20TokenType, ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import wallet from "@ethersproject/wallet";
-import {env, env as conf, vars} from "./config.js";
-import { Webhook } from 'discord-webhook-node';
+import {currency, env, env as conf, vars} from "./config.js";
+import {Webhook} from 'discord-webhook-node';
 
 export const getProvider = (provider_name) => {
     let provider;
@@ -41,34 +41,47 @@ export const doConnect = async () => {
     });
 }
 
-export const doTrade = async (client, order,hook) => {
-    let trade;
-    if(vars.DEBUG) console.time(`trade_${order.order_id}`)
-    try {
-        trade = await client.createTrade({
-            user: client.address,
-            orderId: order.order_id,
-            amountBuy: order.sell.data.quantity,
-            amountSell: order.buy.data.quantity,
-            tokenBuy: {
-                type: ERC721TokenType.ERC721,
-                data: {
-                    tokenId: order.sell.data.token_id,
-                    tokenAddress: env.GODS_TOKEN_ADDRESS,
-                },
+export const doTrade = async (client, order, hook) => {
+    if (vars.DEBUG) console.time(`trade_${order.order_id}`)
+    let params = {
+        user: client.address,
+        orderId: order.order_id,
+        amountBuy: order.sell.data.quantity,
+        amountSell: order.buy.data.quantity,
+        tokenBuy: {
+            type: ERC721TokenType.ERC721,
+            data: {
+                tokenId: order.sell.data.token_id,
+                tokenAddress: env.GODS_TOKEN_ADDRESS,
             },
-            tokenSell: {
+        }
+    }
+    switch (vars.CURRENCY_BUY) {
+        case currency.GODS:
+            params.tokenSell = {
+                type: ERC20TokenType.ERC20,
+                data: {
+                    symbol: currency.GODS,
+                    decimals: 18,
+                    tokenAddress:env.GODS_CURRENCY_TOKEN_ADDRESS
+                }
+            }
+            break;
+        case currency.ETH:
+            params.tokenSell = {
                 type: ETHTokenType.ETH,
                 data: {
                     decimals: 18
                 }
             }
-        })
-        const msg = `[${vars.BOT_NAME}] ${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)}`;
+            break;
+    }
+    try {
+        await client.createTrade(params)
+        const msg = `[${vars.BOT_NAME}] ${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)} ${vars.CURRENCY_BUY}`;
         console.log(msg)
-        if(vars.DEBUG) console.timeEnd(`trade_${order.order_id}`)
+        if (vars.DEBUG) console.timeEnd(`trade_${order.order_id}`)
         hook.send(msg)
-
     } catch (err) {
         console.error(err);
         const msg = `There was an issue creating trade for NFT TOKEN_ID:[${order.sell.data.token_id} https://immutascan.io/address/0xacb3c6a43d15b907e8433077b6d38ae40936fe2c/${order.sell.data.token_id}]`
@@ -82,26 +95,40 @@ export const doTrade = async (client, order,hook) => {
 export const doSell = async (client, asset, price) => {
     if (asset === 0 || asset === undefined || asset === null)
         return 0;
-    try {
-        await client.createOrder({
-            amountSell: 1,
-            amountBuy: price,
-            user: client.address,
-            include_fees: true,
-            tokenSell: {
-                type: ERC721TokenType.ERC721,
-                data: {
-                    tokenAddress: env.GODS_TOKEN_ADDRESS,
-                    tokenId: asset.sell.data.token_id.toLowerCase(),
-                },
+    let params = {
+        amountSell: 1,
+        amountBuy: price,
+        user: client.address,
+        include_fees: true,
+        tokenSell: {
+            type: ERC721TokenType.ERC721,
+            data: {
+                tokenAddress: env.GODS_TOKEN_ADDRESS,
+                tokenId: asset.sell.data.token_id.toLowerCase(),
             },
-            tokenBuy: {
-                type: ETHTokenType.ETH,
+        }
+    }
+    switch (vars.CURRENCY_BUY) {
+        case currency.GODS:
+            params.tokenBuy = {
+                type: ERC20TokenType.ERC20,
                 data: {
                     decimals: 18,
+                    token_address:env.GODS_CURRENCY_TOKEN_ADDRESS
+                }
+            };
+            break;
+        case currency.ETH:
+            params.tokenBuy = {
+                type: ETHTokenType.ETH,
+                    data: {
+                    decimals: 18,
                 },
-            },
-        });
+            };
+            break;
+    }
+    try {
+        await client.createOrder(params);
         console.log(`${asset.sell.data.properties.name}, has been listed for sale at ${formatEther(price)}`);
         return 'done';
     } catch (err) {
@@ -136,17 +163,25 @@ export const isAlreadyBought = async (client, item) => {
 }
 
 export const getOrders = async (client) => {
-    if(vars.DEBUG) console.time(`get_orders`)
-    let orders = [];
-    let result_set = await client.getOrders({
+    if (vars.DEBUG) console.time(`get_orders`)
+    let params = {
         order_by: 'timestamp',
         page_size: vars.LIST_SIZE,
         status: 'active',
-        sell_token_address:env.GODS_TOKEN_ADDRESS,
+        sell_token_address: env.GODS_TOKEN_ADDRESS,
         sell_token_type: ERC721TokenType.ERC721,
-        buy_token_type: ETHTokenType.ETH
-    });
-    if(vars.DEBUG) console.timeEnd(`get_orders`)
+    }
+    switch (vars.CURRENCY_BUY) {
+        case currency.GODS:
+            params.buy_token_address = env.GODS_CURRENCY_TOKEN_ADDRESS;
+            break;
+        case currency.ETH:
+            params.buy_token_type = ETHTokenType.ETH
+            break;
+    }
+    let orders = [];
+    let result_set = await client.getOrders(params);
+    if (vars.DEBUG) console.timeEnd(`get_orders`)
     orders = orders.concat(result_set.result);
     return orders;
 }
@@ -170,8 +205,7 @@ export function comparePrice(price, avg) {
 }
 
 export const getDiff = async (client, item) => {
-    let orders = [];
-    let result_set = await client.getOrders({
+    let params = {
         order_by: 'buy_quantity',
         direction: 'asc',
         page_size: 5,
@@ -179,29 +213,40 @@ export const getDiff = async (client, item) => {
         sell_token_address: item.sell.data.token_address,
         sell_token_name: cleanString(item.sell.data.properties.name),
         sell_token_type: ERC721TokenType.ERC721,
-        buy_token_type: ETHTokenType.ETH,
         include_fees: true
-    });
+    }
+    switch (vars.CURRENCY_BUY) {
+        case currency.GODS:
+            params.buy_token_address = env.GODS_CURRENCY_TOKEN_ADDRESS;
+            break;
+        case currency.ETH:
+            params.buy_token_type = ETHTokenType.ETH
+            break;
+    }
+    let orders = [];
+    let result_set = await client.getOrders(params);
     orders = orders.concat(result_set.result)
-    if (orders.length <= 0){
-        if(vars.DEBUG) console.log(`${cleanString(item.sell.data.properties.name)} [ALREADY_SOLD]`);
+    if (orders.length <= 0) {
+        if (vars.DEBUG) console.log(`${cleanString(item.sell.data.properties.name)} [ALREADY_SOLD]`);
         return 0;
     }
     orders = orders.filter(i => i.order_id !== item.order_id);
     let cheap = orders.reduce(function (prev, curr) {
         return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
     });
+    if (vars.DEBUG) console.log(`CHEAPEST_PRICE: ${formatEther(cheap.buy.data.quantity)} ACTUAL_PRICE: ${formatEther(item.buy.data.quantity)}`)
+
     if (item.buy.data.quantity.lt(cheap.buy.data.quantity)) {
         const diff = formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity));
-        if(vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
+        if (vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
         if (diff > vars.MIN_DIFF)
             return diff;
     }
-    if(vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
+    if (vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
     return 0;
 }
 
-export function getId(item){
+export function getId(item) {
     return new URLSearchParams(item.sell.data.properties.image_url).get('https://card.godsunchained.com/?id');
 }
 
@@ -229,7 +274,18 @@ export function parseEther(num) {
 }
 
 export const getBalances = async (client) => {
-    return await client.getBalances({user: client.address});
+    let rs;
+    switch (vars.CURRENCY_BUY) {
+        case currency.ETH:
+            rs = await client.getBalances({user: client.address});
+            return rs.imx;
+        case currency.GODS:
+            rs = await client.getBalance({
+                user: client.address,
+                tokenAddress: env.GODS_CURRENCY_TOKEN_ADDRESS
+            });
+            return rs.balance
+    }
 }
 
 //todo:
@@ -252,11 +308,11 @@ export const getDiscord = async () => {
     return conf.DISCORD_WEBHOOK ? new Webhook(conf.DISCORD_WEBHOOK) : undefined
 }
 
-export const calcPercentageOf = (percentage,base) =>{
+export const calcPercentageOf = (percentage, base) => {
     return ((base / 100) * percentage);
 }
 
-export function filterOutliers (someArray) {
+export function filterOutliers(someArray) {
     if (someArray.length < 4) {
         return someArray;
     }
@@ -274,7 +330,7 @@ export function filterOutliers (someArray) {
     return values.filter((x) => (x >= minValue) && (x <= maxValue));
 }
 
-function getQuantile (array, quantile) {
+function getQuantile(array, quantile) {
     // Get the index the quantile is at.
     let index = quantile / 100.0 * (array.length - 1);
 

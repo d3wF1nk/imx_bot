@@ -4,6 +4,7 @@ export const env = {
     STARK: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
     REGISTRATION: '0x72a06bf2a1CE5e39cBA06c0CAb824960B587d64c',
     GODS_TOKEN_ADDRESS:'0xacb3c6a43d15b907e8433077b6d38ae40936fe2c',
+    GODS_CURRENCY_TOKEN_ADDRESS:'0xccc8cb5229b0ac8069c51fd58367fd1e622afd97',
 
     NETWORK: 'mainnet',
     API_KEY_INFURA: '',
@@ -12,6 +13,11 @@ export const env = {
     DISCORD_WEBHOOK:'',
 
     JSON_CARDS_PATH: './cards.json'
+}
+
+export const currency = {
+    GODS:'GODS',
+    ETH:'ETH'
 }
 
 export const vars = {
@@ -28,5 +34,9 @@ export const vars = {
     CHECK_BAL:false, //check balance every loop then send msg
     DISABLE_TT:false, //DISABLE TT_CALL AVG LAST PRICE AMOUNT
     MIN_PRICE:0.00003,
-    MIN_DIFF:0
+    MIN_DIFF:0,
+    CURRENCY_BUY:currency.ETH,
+    CURRENCY_SELL:currency.ETH
 }
+
+

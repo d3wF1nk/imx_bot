@@ -4,6 +4,7 @@ import {env, vars} from "./config.js";
 import {BigNumber} from "ethers";
 import {readFile} from 'fs/promises';
 import {parseEther} from "./utils.js";
+import {ERC721TokenType, ETHTokenType} from "@imtbl/imx-sdk";
 
 const hook = await Utils.getDiscord()
 const client = await Utils.doConnect();
@@ -20,9 +21,9 @@ function loop(client) {
 
             //Balance
             let balance = await Utils.getBalances(client);
-            const bal_diff = Utils.comparePrice(Utils.formatEther(balance.imx), Utils.formatEther(prev_balance))
-            prev_balance = balance.imx
-            const banner = `[${vars.BOT_NAME}] ${parseFloat(Utils.formatEther(balance.imx) || 0).toFixed(6)}`
+            const bal_diff = Utils.comparePrice(Utils.formatEther(balance), Utils.formatEther(prev_balance))
+            prev_balance = balance
+            const banner = `[${vars.BOT_NAME}] ${parseFloat(Utils.formatEther(balance) || 0).toFixed(6)}`
             console.log(banner)
 
             //Sending discord notification
@@ -77,7 +78,7 @@ function loop(client) {
             //Potential buy
             let potBuy = [];
             orders.forEach(o => {
-                if (o?.buy?.data?.quantity?.lt(balance?.imx?.div(vars.N_DIV))) {
+                if (o?.buy?.data?.quantity?.lt(balance?.div(vars.N_DIV))) {
                     if (o?.buy?.data?.quantity?.gte(parseEther(vars.MIN_PRICE?.toString())))
                         potBuy.push(o);
                 }
