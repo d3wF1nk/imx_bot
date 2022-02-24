@@ -3,6 +3,7 @@ import {currency, env, env as conf, vars} from "./config.js";
 import wallet from "@ethersproject/wallet";
 import {ERC20TokenType, ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import {cleanString, formatEther} from "./utils.js";
+import * as Utils from "./utils.js";
 
 /**
  * @type {Object} order
@@ -245,6 +246,35 @@ export const getOrders = async (client, filters) => {
     orders = orders.concat(result_set.result);
     return orders;
 }
+
+export const getFixedPrice = async (client, item, min_price) => {
+    let params = {
+        order_by: 'buy_quantity',
+        direction: 'asc',
+        status: 'active',
+        sell_token_address: item.sell.data.token_address,
+        sell_token_name: cleanString(item.sell.data.properties.name),
+        sell_token_type: ERC721TokenType.ERC721,
+        include_fees: true
+    }
+    switch (vars.CURRENCY_BUY) {
+        case currency.GODS:
+            params.buy_token_address = env.GODS_CURRENCY_TOKEN_ADDRESS;
+            break;
+        case currency.ETH:
+            params.buy_token_type = ETHTokenType.ETH
+            break;
+    }
+    let orders = [];
+    let result_set = await client.getOrders(params);
+    orders = orders.concat(result_set.result)
+    orders = orders.filter(i => formatEther(i.buy.data.quantity) > (min_price + Utils.calcPercentageOf(vars.CRESTA,min_price)))
+    let cheap = orders.reduce(function (prev, curr) {
+        return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
+    });
+    return cheap.buy.data.quantity.sub(Utils.parseEther(vars.X_VAL.toString()));
+}
+
 
 export const getDiff = async (client, item) => {
     let params = {

@@ -54,14 +54,18 @@ function loop(client) {
             const cards = JSON.parse(json_file.toString());
 
             //Check for instant buy:
+            let toSell = []
             if (cards?.instant?.length > 0)
                 for (const card of cards.instant) {
                     for (const order of orders) {
-                        if (card.id === Utils.getTPId(order.item.sell.data.properties.image_url) && Utils.formatEther(order.buy.data.quantity) <= card.eth) {
+                        if (card.id === Utils.getTPId(order.sell.data.properties.image_url) && Utils.formatEther(order.buy.data.quantity) <= card.eth) {
                             const msg = `[${vars.BOT_NAME}] try to snipe ${card.name} at ${Utils.formatEther(order.buy.data.quantity)} ..`
                             console.log(msg)
                             if (vars.DEBUG) hook.send(msg).then()
-                            await Imx.doTrade(client, order, hook)
+                            toSell.push({
+                                item: await Imx.doTrade(client, order, hook),
+                                price: await Imx.getFixedPrice(client, order, card.eth)
+                            })
                         }
                     }
                 }
@@ -87,7 +91,7 @@ function loop(client) {
             let topBuy = []
             if (vars.DISABLE_TT)
                 topBuy = potBuy;
-            else
+            /*else
                 for (const p of potBuy) {
                     const tp = Utils.getTokenProto(p)
                     if (tp !== 0) {
@@ -104,10 +108,9 @@ function loop(client) {
                                         }
                     }
                 }
-            console.log(`top_buy: ${topBuy.length}`)
+            console.log(`top_buy: ${topBuy.length}`)*/
 
             //Filter && buy
-            let toSell = []
             for (const t of topBuy) {
                 if (await Imx.isAlreadyBought(client, t))
                     continue;
