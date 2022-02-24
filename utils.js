@@ -2,10 +2,15 @@ import {ethers} from "ethers";
 import {env as conf} from "./config.js";
 import {Webhook} from 'discord-webhook-node';
 
-export function cleanString(str) {
+export function cleanAssetName(str) {
     if (str?.includes('-'))
         return str.split('-')[str.split('-').length - 1]
     return str?.replace(/[^a-zA-Z ]/g, "")
+}
+
+export function cleanOrderName(str) {
+    if (str?.includes('-'))
+        return str.split('-')[str.split('-').length - 1]
 }
 
 export function comparePrice(price, avg) {

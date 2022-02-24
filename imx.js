@@ -2,7 +2,7 @@ import {ethers, providers} from "ethers";
 import {currency, env, env as conf, vars} from "./config.js";
 import wallet from "@ethersproject/wallet";
 import {ERC20TokenType, ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
-import {cleanString, formatEther} from "./utils.js";
+import {cleanOrderName, cleanAssetName, formatEther} from "./utils.js";
 import * as Utils from "./utils.js";
 
 /**
@@ -95,7 +95,7 @@ export const isAlreadyBought = async (client, item) => {
         return true
     let filters = {
         user: client.address,
-        sell_token_name: cleanString(item.sell.data.properties.name)
+        sell_token_name: cleanOrderName(item.sell.data.properties.name)
     }
     copies = await getOrders(client, filters)
     if (copies <= 0)
@@ -208,7 +208,7 @@ export const getAssets = async (client, params) => {
     params.cursor = assetCursor;
     let assets = [];
     do {
-        let result_set = await client.getAssets({user: params.user, name: cleanString(params.name), cursor: assetCursor});
+        let result_set = await client.getAssets({user: params.user, name: cleanAssetName(params.name), cursor: assetCursor});
         assets = assets.concat(result_set.result);
         assetCursor = result_set.cursor;
     } while (assetCursor);
@@ -253,7 +253,7 @@ export const getFixedPrice = async (client, item, min_price) => {
         direction: 'asc',
         status: 'active',
         sell_token_address: item.sell.data.token_address,
-        sell_token_name: cleanString(item.sell.data.properties.name),
+        sell_token_name: Utils.cleanOrderName(item.sell.data.properties.name),
         sell_token_type: ERC721TokenType.ERC721,
         include_fees: true
     }
@@ -283,7 +283,7 @@ export const getDiff = async (client, item) => {
         page_size: 5,
         status: 'active',
         sell_token_address: item.sell.data.token_address,
-        sell_token_name: cleanString(item.sell.data.properties.name),
+        sell_token_name: Utils.cleanOrderName(item.sell.data.properties.name),
         sell_token_type: ERC721TokenType.ERC721,
         include_fees: true
     }
