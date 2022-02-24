@@ -299,7 +299,7 @@ export const getDiff = async (client, item) => {
     let result_set = await client.getOrders(params);
     orders = orders.concat(result_set.result)
     if (orders.length <= 0) {
-        if (vars.DEBUG) console.log(`${cleanString(item.sell.data.properties.name)} [ALREADY_SOLD]`);
+        if (vars.DEBUG) console.log(`${item.sell.data.properties.name} [ALREADY_SOLD]`);
         return 0;
     }
     orders = orders.filter(i => i.order_id !== item.order_id);

@@ -3,6 +3,8 @@ import {env as conf} from "./config.js";
 import {Webhook} from 'discord-webhook-node';
 
 export function cleanString(str) {
+    if (str?.includes('-'))
+        return str.split('-')[str.split('-').length - 1]
     return str?.replace(/[^a-zA-Z ]/g, "")
 }
 
