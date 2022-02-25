@@ -11,6 +11,7 @@ export function cleanAssetName(str) {
 export function cleanOrderName(str) {
     if (str?.includes('-'))
         return str.split('-')[str.split('-').length - 1]
+    return str;
 }
 
 export function comparePrice(price, avg) {

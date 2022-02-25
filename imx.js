@@ -89,24 +89,14 @@ export const isAlreadyBought = async (client, item) => {
         name: item.sell.data.properties.name
     }
     let copies = await getAssets(client, params)
-    if (copies.length <= 0)
-        return false
-    else if (copies >= 2)
-        return true
-    let filters = {
-        user: client.address,
-        sell_token_name: cleanOrderName(item.sell.data.properties.name)
-    }
-    copies = await getOrders(client, filters)
-    if (copies <= 0)
-        return false
+    if (copies.length <= 0) return false
     const msg = `(${item.sell.data.properties.name}) ALREADY PRESENT IN COLLECTION`
     if(vars.DEBUG) console.log(msg)
     return true;
 }
 
 export const doTrade = async (client, order, hook) => {
-    if (vars.DEBUG) console.time(`trade_${order.order_id}`)
+    if (vars.DEBUG_TIME) console.time(`trade_${order.order_id}`)
     let params = {
         user: client.address,
         orderId: order.order_id,
@@ -144,7 +134,7 @@ export const doTrade = async (client, order, hook) => {
         await client.createTrade(params)
         const msg = `[${vars.BOT_NAME}] ${order.sell.data.properties.name}, has been bought at ${formatEther(order.buy.data.quantity)} ${vars.CURRENCY_BUY}`;
         console.log(msg)
-        if (vars.DEBUG) console.timeEnd(`trade_${order.order_id}`)
+        if (vars.DEBUG_TIME) console.timeEnd(`trade_${order.order_id}`)
         hook.send(msg)
     } catch (err) {
         console.error(err);
@@ -204,6 +194,7 @@ export const doSell = async (client, asset, price) => {
 }
 
 export const getAssets = async (client, params) => {
+    if (vars.DEBUG_TIME) console.time(`get_asset_${cleanAssetName(params.name)}`)
     let assetCursor;
     params.cursor = assetCursor;
     let assets = [];
@@ -212,12 +203,12 @@ export const getAssets = async (client, params) => {
         assets = assets.concat(result_set.result);
         assetCursor = result_set.cursor;
     } while (assetCursor);
+    if (vars.DEBUG_TIME) console.timeEnd(`get_asset_${cleanAssetName(params.name)}`)
     return assets;
 }
 
 export const getOrders = async (client, filters) => {
-    if (vars.DEBUG) console.time(`get_orders`)
-
+    if (vars.DEBUG_TIME) console.time(`get_orders`)
     let params = {
         order_by: 'timestamp',
         page_size: vars.LIST_SIZE,
@@ -242,7 +233,7 @@ export const getOrders = async (client, filters) => {
     }
     let orders = [];
     let result_set = await client.getOrders(params);
-    if (vars.DEBUG) console.timeEnd(`get_orders`)
+    if (vars.DEBUG_TIME) console.timeEnd(`get_orders`)
     orders = orders.concat(result_set.result);
     return orders;
 }
@@ -277,6 +268,7 @@ export const getFixedPrice = async (client, item, min_price) => {
 
 
 export const getDiff = async (client, item) => {
+    if (vars.DEBUG_TIME) console.time(`get_diff`)
     let params = {
         order_by: 'buy_quantity',
         direction: 'asc',
@@ -300,21 +292,27 @@ export const getDiff = async (client, item) => {
     orders = orders.concat(result_set.result)
     if (orders.length <= 0) {
         if (vars.DEBUG) console.log(`${item.sell.data.properties.name} [ALREADY_SOLD]`);
+        if (vars.DEBUG_TIME) console.timeEnd(`get_diff`)
         return 0;
     }
     orders = orders.filter(i => i.order_id !== item.order_id);
     let cheap = orders.reduce(function (prev, curr) {
         return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
     });
-    if (vars.DEBUG) console.log(`CHEAPEST_PRICE: ${formatEther(cheap.buy.data.quantity)} ACTUAL_PRICE: ${formatEther(item.buy.data.quantity)}`)
-
+    if (vars.DEBUG) console.log(`(${Utils.cleanOrderName(item.sell.data.properties.name)}) CHEAP: ${formatEther(cheap.buy.data.quantity)} ACT: ${formatEther(item.buy.data.quantity)}`)
     if (item.buy.data.quantity.lt(cheap.buy.data.quantity)) {
         const diff = formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity));
-        if (vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
-        if (diff > vars.MIN_DIFF)
+        if (vars.DEBUG) console.log(`(${item.sell.data.properties.name}) DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))} [OK]`)
+        if (diff > vars.MIN_DIFF) {
+            if (vars.DEBUG_TIME) console.timeEnd(`get_diff`)
             return diff;
+        }else{
+            if (vars.DEBUG) console.log(`(${item.sell.data.properties.name}) DIFF (${diff}) is less than MIN_DIFF: ${vars.MIN_DIFF} [KO]`)
+            return 0;
+        }
     }
-    if (vars.DEBUG) console.log(`DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
+    if (vars.DEBUG) console.log(`[LOW DIFF] : ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
+    if (vars.DEBUG_TIME) console.timeEnd(`get_diff`)
     return 0;
 }
 

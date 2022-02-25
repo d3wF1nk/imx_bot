@@ -1,6 +1,6 @@
 import * as Utils from "./utils.js";
 import * as Imx from "./imx.js";
-import * as TT from "./tt.js";
+import * as log from "log-timestamp";
 import {env, vars} from "./config.js";
 import {BigNumber} from "ethers";
 import {readFile} from 'fs/promises';
@@ -15,7 +15,8 @@ loop(client)
 function loop(client) {
     try {
         setTimeout(async () => {
-            console.log(`\nstart-loop(${i}/${vars.HB_RATE})`)
+            console.log('\n\n\n')
+            console.log(`start-loop(${i}/${vars.HB_RATE})`)
 
             //Balance
             let balance = await Imx.getBalances(client);
@@ -32,7 +33,7 @@ function loop(client) {
 
             //Getting the latest items
             let orders = await Imx.getOrders(client);
-            console.log(`\ntot_order: ${orders.length}`)
+            console.log(`tot_order: ${orders.length}`)
 
             //Get cards lists
             /**
@@ -87,40 +88,20 @@ function loop(client) {
             })
             console.log(`pot_buy: ${potBuy.length}`)
 
-            //Frequently buy
-            let topBuy = []
-            if (vars.DISABLE_TT)
-                topBuy = potBuy;
-            /*else
-                for (const p of potBuy) {
-                    const tp = Utils.getTokenProto(p)
-                    if (tp !== 0) {
-                        const avg = await TT.getAvg(tp)
-                        if (avg !== 0)
-                            if (!(vars.MAX_TIME) || avg.last_date < vars.MAX_TIME)
-                                if (!(vars.MIN_AMOUNT_TRADE) || avg.daily_amount > vars.MIN_AMOUNT_TRADE)
-                                    if (avg.avg_price > Utils.formatEther(p.buy.data.quantity))
-                                        if (avg.last_price > Utils.formatEther(p.buy.data.quantity)) {
-                                            const diff = Utils.comparePrice(Utils.formatEther(p.buy.data.quantity), avg.avg_price)
-                                            console.log(`[id:${p.order_id}] [avg:${avg.avg_price}] [${avg.last_date}m => last_price:${avg.last_price}] [actual_price:${Utils.formatEther(p.buy.data.quantity)}] ${p.sell.data.properties.name} (${diff?.sign}${diff?.value?.toFixed(1)}%)${diff.alert ? '⚠ ⚠ ⚠' : ''}`)
-                                            console.log(`${TT.composeUrl(p)}\n`)
-                                            topBuy.push(p)
-                                        }
-                    }
-                }
-            console.log(`top_buy: ${topBuy.length}`)*/
-
             //Filter && buy
-            for (const t of topBuy) {
+            for (const t of potBuy) {
                 if (await Imx.isAlreadyBought(client, t))
                     continue;
                 const diff = await Imx.getDiff(client, t)
-                if (vars.DEBUG) console.log(`MIN_CRESTA is :${Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity)).toFixed(7)}`);
+                //if (vars.DEBUG) console.log(`MIN_CRESTA is :${Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity)).toFixed(7)}`);
                 if (diff > Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity))) {
+                    if (vars.DEBUG) console.log(`[OK_*]`)
                     toSell.push({
                         item: await Imx.doTrade(client, t, hook),
                         price: (t.buy.data.quantity.add(Utils.parseEther(diff.toString())).sub(Utils.parseEther(vars.X_VAL.toString())))
                     })
+                }else{
+                    if (vars.DEBUG) console.log(`[__]`)
                 }
             }
             console.log(`to_sell: ${toSell.length}`)
