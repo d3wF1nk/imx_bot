@@ -2,8 +2,8 @@ import {ethers, providers} from "ethers";
 import {currency, env, env as conf, vars} from "./config.js";
 import wallet from "@ethersproject/wallet";
 import {ERC20TokenType, ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
-import {cleanOrderName, cleanAssetName, formatEther} from "./utils.js";
 import * as Utils from "./utils.js";
+import {cleanAssetName, formatEther} from "./utils.js";
 
 /**
  * @type {Object} order
@@ -91,7 +91,7 @@ export const isAlreadyBought = async (client, item) => {
     let copies = await getAssets(client, params)
     if (copies.length <= 0) return false
     const msg = `(${item.sell.data.properties.name}) ALREADY PRESENT IN COLLECTION`
-    if(vars.DEBUG) console.log(msg)
+    if (vars.DEBUG) console.log(msg)
     return true;
 }
 
@@ -259,7 +259,7 @@ export const getFixedPrice = async (client, item, min_price) => {
     let orders = [];
     let result_set = await client.getOrders(params);
     orders = orders.concat(result_set.result)
-    orders = orders.filter(i => formatEther(i.buy.data.quantity) > (min_price + Utils.calcPercentageOf(vars.CRESTA,min_price)))
+    orders = orders.filter(i => formatEther(i.buy.data.quantity) > (min_price + Utils.calcPercentageOf(vars.CRESTA, min_price)))
     let cheap = orders.reduce(function (prev, curr) {
         return prev.buy.data.quantity.lt(curr.buy.data.quantity) ? prev : curr;
     });
@@ -268,7 +268,6 @@ export const getFixedPrice = async (client, item, min_price) => {
 
 
 export const getDiff = async (client, item) => {
-    if (vars.DEBUG_TIME) console.time(`get_diff`)
     let params = {
         order_by: 'buy_quantity',
         direction: 'asc',
@@ -292,7 +291,6 @@ export const getDiff = async (client, item) => {
     orders = orders.concat(result_set.result)
     if (orders.length <= 0) {
         if (vars.DEBUG) console.log(`${item.sell.data.properties.name} [ALREADY_SOLD]`);
-        if (vars.DEBUG_TIME) console.timeEnd(`get_diff`)
         return 0;
     }
     orders = orders.filter(i => i.order_id !== item.order_id);
@@ -304,15 +302,13 @@ export const getDiff = async (client, item) => {
         const diff = formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity));
         if (vars.DEBUG) console.log(`(${item.sell.data.properties.name}) DIFF is: ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))} [OK]`)
         if (diff > vars.MIN_DIFF) {
-            if (vars.DEBUG_TIME) console.timeEnd(`get_diff`)
             return diff;
-        }else{
+        } else {
             if (vars.DEBUG) console.log(`(${item.sell.data.properties.name}) DIFF (${diff}) is less than MIN_DIFF: ${vars.MIN_DIFF} [KO]`)
             return 0;
         }
     }
     if (vars.DEBUG) console.log(`[LOW DIFF] : ${formatEther(cheap.buy.data.quantity.sub(item.buy.data.quantity))}`)
-    if (vars.DEBUG_TIME) console.timeEnd(`get_diff`)
     return 0;
 }
 
@@ -330,16 +326,3 @@ export const getBalances = async (client) => {
             return rs.balance
     }
 }
-
-/*export const getTrades = async (client) => {
-    let tradeCursor;
-    let trades = [];
-    do {
-        let result_set = await client.getTrades({
-            cursor: tradeCursor,
-        });
-        trades = trades.concat(result_set.result);
-        tradeCursor = result_set.cursor;
-    } while (tradeCursor);
-    return trades;
-}*/

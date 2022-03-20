@@ -142,5 +142,11 @@
     }
   ],
   "black": [],
-  "instant": []
+  "instant": [
+    {
+      "name": "Chieftain of Impulse",
+      "id": "1482",
+      "eth": 0.000019
+    }
+  ]
 }

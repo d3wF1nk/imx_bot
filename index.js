@@ -1,6 +1,5 @@
 import * as Utils from "./utils.js";
 import * as Imx from "./imx.js";
-import * as log from "log-timestamp";
 import {env, vars} from "./config.js";
 import {BigNumber} from "ethers";
 import {readFile} from 'fs/promises';
@@ -92,7 +91,9 @@ function loop(client) {
             for (const t of potBuy) {
                 if (await Imx.isAlreadyBought(client, t))
                     continue;
+                if (vars.DEBUG_TIME) console.time(`get_diff`)
                 const diff = await Imx.getDiff(client, t)
+                if (vars.DEBUG_TIME) console.timeEnd(`get_diff`)
                 //if (vars.DEBUG) console.log(`MIN_CRESTA is :${Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity)).toFixed(7)}`);
                 if (diff > Utils.calcPercentageOf(vars.CRESTA, Utils.formatEther(t.buy.data.quantity))) {
                     if (vars.DEBUG) console.log(`[OK_*]`)
@@ -100,7 +101,7 @@ function loop(client) {
                         item: await Imx.doTrade(client, t, hook),
                         price: (t.buy.data.quantity.add(Utils.parseEther(diff.toString())).sub(Utils.parseEther(vars.X_VAL.toString())))
                     })
-                }else{
+                } else {
                     if (vars.DEBUG) console.log(`[__]`)
                 }
             }
