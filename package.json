@@ -18,7 +18,8 @@
     "axios": "^0.25.0",
     "discord-webhook-node": "^1.1.8",
     "ethers": "^5.5.4",
-    "log-timestamp": "^0.3.0"
+    "log-timestamp": "^0.3.0",
+    "mongodb": "^4.4.1"
   },
   "dependencies": {
     "discord": "^0.8.2"

@@ -4,6 +4,8 @@ import wallet from "@ethersproject/wallet";
 import {ERC20TokenType, ERC721TokenType, ETHTokenType, ImmutableXClient} from "@imtbl/imx-sdk";
 import * as Utils from "./utils.js";
 import {cleanAssetName, formatEther} from "./utils.js";
+import mongo from "mongodb";
+import * as mongos from "./mongos.js";
 
 /**
  * @type {Object} order
@@ -185,6 +187,7 @@ export const doSell = async (client, asset, price) => {
     try {
         await client.createOrder(params);
         console.log(`${asset.sell.data.properties.name}, has been listed for sale at ${formatEther(price)}`);
+        mongos.insert(asset.sell.data.token_id,asset.sell.data.properties.name,formatEther(price), client.address).then(console.log)
         return 'done';
     } catch (err) {
         console.log(err)
@@ -265,7 +268,6 @@ export const getFixedPrice = async (client, item, min_price) => {
     });
     return cheap.buy.data.quantity.sub(Utils.parseEther(vars.X_VAL.toString()));
 }
-
 
 export const getDiff = async (client, item) => {
     let params = {

@@ -6,6 +6,7 @@ import {readFile} from 'fs/promises';
 
 const hook = await Utils.getDiscord()
 const client = await Imx.doConnect();
+
 let prev_balance = BigNumber.from(0);
 
 let i = 1;
